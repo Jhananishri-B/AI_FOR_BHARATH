@@ -1,0 +1,184 @@
+# ============================================================================
+# LearnQuest .gitignore - Security & Development Files
+# ============================================================================
+# 
+# IMPORTANT SECURITY NOTES:
+# - All .env files are ignored to protect API keys, database credentials, 
+#   JWT secrets, OAuth tokens, and SMTP passwords
+# - Database exports and backups are ignored to prevent data leaks
+# - Credential files, API keys, and tokens are excluded
+# - User-uploaded content and generated certificates are ignored
+# 
+# For Development:
+# - Use env.example as a template for your local .env files
+# - Never commit actual credentials or secrets
+# - Add screenshots to docs/screenshots/ when ready (currently not ignored)
+# 
+# ============================================================================
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.venv/
+venv/
+ENV/
+env/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables - CRITICAL: Never commit these!
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*
+*.env
+*.local
+**/.env
+**/.env.*
+services/api/.env
+apps/*/.env
+apps/*/.env.local
+apps/*/.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+.pytest_cache/
+
+# Docker
+docker-compose.override.yml
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Misc
+*.tmp
+*.temp
+.cache/
+
+# Security & Credentials - CRITICAL: Never commit these!
+**/credentials.json
+**/secrets.json
+**/config.local.json
+**/*secret*
+**/*key*.json
+**/*token*
+**/oauth*.json
+**/google*.json
+*.pem
+*.key
+*.crt
+*.cert
+**/firebase*.json
+**/serviceAccount*.json
+
+# Database exports and backups
+database_export*.zip
+database_exports/
+*.sql
+*.dump
+*.backup
+mongodb_dump/
+db_backup/
+
+# API Keys and Tokens
+**/api_keys.txt
+**/tokens.txt
+**/.secrets
+**/secret_keys.py
+**/config_secret.py
+
+# Proctoring specific
+temp_video/
+temp_audio/
+face_encodings/
+violation_logs/
+*.mp4
+*.wav
+*.avi
+
+# AI/ML models and data
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.tflite
+embeddings/
+node_mappings.json
+simple_embeddings.json
+
+# Certificate files (generated certificates - keep templates)
+certificates/
+generated_certificates/
+user_certificates/
+*.pdf
+
+# Screenshots - Note: Add screenshots to docs/screenshots/ when ready
+# Uncomment the line below if you want to ignore screenshots during development
+# docs/screenshots/*.png
+# docs/screenshots/*.jpg
+# docs/screenshots/*.jpeg
+
+# User-uploaded content
+uploads/
+user_uploads/
+media/uploads/
+static/uploads/
+
+# Local development files
+local_executor.py
+test_*.html
+test_*.py
+*.bat.local
+*.ps1.local
+FIX_LOGIN.bat
+
+# Session and temporary user data
+sessions/
+*.session
+*.sqlite
+*.db
+local_storage/
+
+# Proctoring violation data (sensitive)
+violation_recordings/
+proctoring_violations/
+exam_recordings/
+
+# Google OAuth tokens (if stored locally)
+**/token.json
+**/credentials_stored.json

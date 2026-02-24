@@ -1,0 +1,144 @@
+[
+  {
+    "type": "code",
+    "title": "Sum of Two Numbers",
+    "prompt": "Write a program that reads two integers from input and prints their sum.",
+    "test_cases": [
+      { "input": "1 2", "expected_output": "3", "is_hidden": false },
+      { "input": "10 20", "expected_output": "30", "is_hidden": false },
+      { "input": "-5 5", "expected_output": "0", "is_hidden": true }
+    ],
+    "difficulty": "Easy",
+    "topic_name": "Basics",
+    "tags": ["code", "math", "input-output"],
+    "starter_code": {
+      "python": "# Read two integers and print their sum\na = int(input())\nb = int(input())\n# Your code here\nprint(a + b)",
+      "javascript": "// Read input and print sum\nconst readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nlet input = [];\nrl.on('line', (line) => {\n  input.push(parseInt(line));\n  if (input.length === 2) {\n    console.log(input[0] + input[1]);\n    rl.close();\n  }\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Reverse a String",
+    "prompt": "Write a function that takes a string as input and returns the reversed string.",
+    "test_cases": [
+      { "input": "hello", "expected_output": "olleh", "is_hidden": false },
+      { "input": "world", "expected_output": "dlrow", "is_hidden": false },
+      { "input": "a", "expected_output": "a", "is_hidden": true },
+      { "input": "Python", "expected_output": "nohtyP", "is_hidden": true }
+    ],
+    "difficulty": "Easy",
+    "topic_name": "Strings",
+    "tags": ["strings", "manipulation"],
+    "starter_code": {
+      "python": "# Read a string and print its reverse\ns = input()\n# Your code here\nprint(s[::-1])",
+      "javascript": "// Read a string and print its reverse\nconst readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  console.log(line.split('').reverse().join(''));\n  rl.close();\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Find Maximum in Array",
+    "prompt": "Given n integers, find and print the maximum value.\nFirst line contains n (number of integers).\nSecond line contains n space-separated integers.",
+    "test_cases": [
+      { "input": "5\n1 2 3 4 5", "expected_output": "5", "is_hidden": false },
+      { "input": "3\n10 20 15", "expected_output": "20", "is_hidden": false },
+      { "input": "4\n-1 -5 -3 -2", "expected_output": "-1", "is_hidden": true }
+    ],
+    "difficulty": "Easy",
+    "topic_name": "Arrays",
+    "tags": ["arrays", "max", "loops"],
+    "starter_code": {
+      "python": "# Read n and then n integers, print maximum\nn = int(input())\narr = list(map(int, input().split()))\n# Your code here\nprint(max(arr))",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n  lines.push(line);\n  if (lines.length === 2) {\n    const arr = lines[1].split(' ').map(Number);\n    console.log(Math.max(...arr));\n    rl.close();\n  }\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Factorial Calculation",
+    "prompt": "Write a program that calculates the factorial of a given number n.\nFactorial of n (n!) = n × (n-1) × (n-2) × ... × 1",
+    "test_cases": [
+      { "input": "5", "expected_output": "120", "is_hidden": false },
+      { "input": "0", "expected_output": "1", "is_hidden": false },
+      { "input": "3", "expected_output": "6", "is_hidden": true },
+      { "input": "7", "expected_output": "5040", "is_hidden": true }
+    ],
+    "difficulty": "Easy",
+    "topic_name": "Math",
+    "tags": ["math", "factorial", "loops"],
+    "starter_code": {
+      "python": "# Calculate factorial of n\nn = int(input())\n# Your code here\nresult = 1\nfor i in range(1, n + 1):\n    result *= i\nprint(result)",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  const n = parseInt(line);\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  console.log(result);\n  rl.close();\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Check Prime Number",
+    "prompt": "Write a program that checks if a given number is prime.\nA prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.\nPrint 'Prime' if the number is prime, otherwise print 'Not Prime'.",
+    "test_cases": [
+      { "input": "7", "expected_output": "Prime", "is_hidden": false },
+      { "input": "4", "expected_output": "Not Prime", "is_hidden": false },
+      { "input": "2", "expected_output": "Prime", "is_hidden": true },
+      { "input": "1", "expected_output": "Not Prime", "is_hidden": true }
+    ],
+    "difficulty": "Medium",
+    "topic_name": "Math",
+    "tags": ["math", "prime", "algorithms"],
+    "starter_code": {
+      "python": "# Check if number is prime\nn = int(input())\n# Your code here\nif n <= 1:\n    print('Not Prime')\nelse:\n    is_prime = True\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            is_prime = False\n            break\n    print('Prime' if is_prime else 'Not Prime')",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  const n = parseInt(line);\n  if (n <= 1) {\n    console.log('Not Prime');\n  } else {\n    let isPrime = true;\n    for (let i = 2; i <= Math.sqrt(n); i++) {\n      if (n % i === 0) {\n        isPrime = false;\n        break;\n      }\n    }\n    console.log(isPrime ? 'Prime' : 'Not Prime');\n  }\n  rl.close();\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Fibonacci Series",
+    "prompt": "Generate and print the first n numbers of the Fibonacci series.\nFibonacci series: 0, 1, 1, 2, 3, 5, 8, 13, ...\nEach number is the sum of the two preceding ones.\nPrint the numbers space-separated on one line.",
+    "test_cases": [
+      { "input": "5", "expected_output": "0 1 1 2 3", "is_hidden": false },
+      { "input": "7", "expected_output": "0 1 1 2 3 5 8", "is_hidden": false },
+      { "input": "1", "expected_output": "0", "is_hidden": true },
+      { "input": "10", "expected_output": "0 1 1 2 3 5 8 13 21 34", "is_hidden": true }
+    ],
+    "difficulty": "Medium",
+    "topic_name": "Sequences",
+    "tags": ["fibonacci", "sequences", "loops"],
+    "starter_code": {
+      "python": "# Generate first n Fibonacci numbers\nn = int(input())\n# Your code here\na, b = 0, 1\nresult = []\nfor i in range(n):\n    result.append(a)\n    a, b = b, a + b\nprint(' '.join(map(str, result)))",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  const n = parseInt(line);\n  let a = 0, b = 1;\n  let result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(a);\n    [a, b] = [b, a + b];\n  }\n  console.log(result.join(' '));\n  rl.close();\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Count Vowels",
+    "prompt": "Write a program that counts the number of vowels (a, e, i, o, u) in a given string.\nConsider both uppercase and lowercase vowels.",
+    "test_cases": [
+      { "input": "hello", "expected_output": "2", "is_hidden": false },
+      { "input": "AEIOU", "expected_output": "5", "is_hidden": false },
+      { "input": "programming", "expected_output": "3", "is_hidden": true },
+      { "input": "xyz", "expected_output": "0", "is_hidden": true }
+    ],
+    "difficulty": "Easy",
+    "topic_name": "Strings",
+    "tags": ["strings", "counting", "vowels"],
+    "starter_code": {
+      "python": "# Count vowels in string\ns = input()\n# Your code here\nvowels = 'aeiouAEIOU'\ncount = sum(1 for char in s if char in vowels)\nprint(count)",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  const vowels = 'aeiouAEIOU';\n  const count = line.split('').filter(char => vowels.includes(char)).length;\n  console.log(count);\n  rl.close();\n});"
+    }
+  },
+  {
+    "type": "code",
+    "title": "Palindrome Check",
+    "prompt": "Check if a given string is a palindrome.\nA palindrome reads the same backward as forward (ignoring spaces and case).\nPrint 'Yes' if palindrome, 'No' otherwise.",
+    "test_cases": [
+      { "input": "racecar", "expected_output": "Yes", "is_hidden": false },
+      { "input": "hello", "expected_output": "No", "is_hidden": false },
+      { "input": "A man a plan a canal Panama", "expected_output": "Yes", "is_hidden": true },
+      { "input": "python", "expected_output": "No", "is_hidden": true }
+    ],
+    "difficulty": "Medium",
+    "topic_name": "Strings",
+    "tags": ["strings", "palindrome", "algorithms"],
+    "starter_code": {
+      "python": "# Check if string is palindrome\ns = input()\n# Your code here\ncleaned = ''.join(s.lower().split())\nprint('Yes' if cleaned == cleaned[::-1] else 'No')",
+      "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({\n  input: process.stdin,\n  output: process.stdout\n});\n\nrl.on('line', (line) => {\n  const cleaned = line.toLowerCase().replace(/\\s/g, '');\n  const reversed = cleaned.split('').reverse().join('');\n  console.log(cleaned === reversed ? 'Yes' : 'No');\n  rl.close();\n});"
+    }
+  }
+]

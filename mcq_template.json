@@ -1,0 +1,107 @@
+[
+  {
+    "title": "What is Python?",
+    "options": ["A programming language", "A snake", "A database", "An OS"],
+    "correct_answer": 0,
+    "difficulty": "Easy",
+    "topic_name": "Python Basics",
+    "tags": ["python", "basics"],
+    "explanation": "Python is a high-level, interpreted programming language known for its simplicity and readability."
+  },
+  {
+    "title": "Which HTTP method is idempotent?",
+    "options": ["POST", "PUT", "PATCH", "CONNECT"],
+    "correct_answer": 1,
+    "difficulty": "Medium",
+    "topic_name": "Web Development",
+    "tags": ["http", "web", "rest"],
+    "explanation": "PUT is idempotent - calling it multiple times with the same data produces the same result."
+  },
+  {
+    "title": "What is the time complexity of binary search?",
+    "options": ["O(n)", "O(log n)", "O(n^2)", "O(1)"],
+    "correct_answer": 1,
+    "difficulty": "Medium",
+    "topic_name": "Data Structures & Algorithms",
+    "tags": ["algorithms", "complexity", "search"],
+    "explanation": "Binary search has O(log n) time complexity because it divides the search space in half each iteration."
+  },
+  {
+    "title": "Which data structure uses LIFO (Last In First Out)?",
+    "options": ["Queue", "Stack", "Array", "Linked List"],
+    "correct_answer": 1,
+    "difficulty": "Easy",
+    "topic_name": "Data Structures",
+    "tags": ["stack", "data-structures"],
+    "explanation": "Stack follows LIFO principle where the last element added is the first one to be removed."
+  },
+  {
+    "title": "What does SQL stand for?",
+    "options": ["Structured Query Language", "Simple Question Language", "Standard Quality Language", "System Query Logic"],
+    "correct_answer": 0,
+    "difficulty": "Easy",
+    "topic_name": "Databases",
+    "tags": ["sql", "database", "basics"],
+    "explanation": "SQL stands for Structured Query Language, used for managing relational databases."
+  },
+  {
+    "title": "Which sorting algorithm has the best average-case time complexity?",
+    "options": ["Bubble Sort", "Quick Sort", "Insertion Sort", "Selection Sort"],
+    "correct_answer": 1,
+    "difficulty": "Hard",
+    "topic_name": "Algorithms",
+    "tags": ["sorting", "algorithms", "complexity"],
+    "explanation": "Quick Sort has O(n log n) average-case complexity, better than O(n²) algorithms like Bubble Sort."
+  },
+  {
+    "title": "What is a RESTful API?",
+    "options": [
+      "A type of database",
+      "An architectural style for web services",
+      "A programming language",
+      "A frontend framework"
+    ],
+    "correct_answer": 1,
+    "difficulty": "Medium",
+    "topic_name": "Web Development",
+    "tags": ["rest", "api", "web-services"],
+    "explanation": "REST (Representational State Transfer) is an architectural style for designing networked applications."
+  },
+  {
+    "title": "Which of the following is NOT a JavaScript data type?",
+    "options": ["String", "Boolean", "Character", "Number"],
+    "correct_answer": 2,
+    "difficulty": "Easy",
+    "topic_name": "JavaScript",
+    "tags": ["javascript", "data-types"],
+    "explanation": "JavaScript doesn't have a 'Character' type; single characters are just strings of length 1."
+  },
+  {
+    "title": "What is the purpose of Git?",
+    "options": [
+      "Database management",
+      "Version control",
+      "Code compilation",
+      "Web hosting"
+    ],
+    "correct_answer": 1,
+    "difficulty": "Easy",
+    "topic_name": "DevOps",
+    "tags": ["git", "version-control", "devops"],
+    "explanation": "Git is a distributed version control system for tracking changes in source code."
+  },
+  {
+    "title": "What does CSS stand for?",
+    "options": [
+      "Computer Style Sheets",
+      "Cascading Style Sheets",
+      "Creative Style System",
+      "Colorful Style Sheets"
+    ],
+    "correct_answer": 1,
+    "difficulty": "Easy",
+    "topic_name": "Web Development",
+    "tags": ["css", "frontend", "web"],
+    "explanation": "CSS stands for Cascading Style Sheets, used for styling HTML documents."
+  }
+]

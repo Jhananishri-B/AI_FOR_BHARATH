@@ -1,0 +1,460 @@
+{
+  "title": "Python Intermediate: Advanced Features and OOP",
+  "description": "Transition to an intermediate level by mastering functional programming tools, advanced data structures, file I/O, and the principles of Object-Oriented Programming (OOP).",
+  "xp_reward": 1300,
+  "modules": [
+    {
+      "title": "Module 1: Functional Programming Tools",
+      "order": 1,
+      "topics": [
+        {
+          "title": "List Comprehensions, Map, and Filter",
+          "content": "Master Python's concise syntax for data transformation with list comprehensions and higher-order functions.",
+          "xp_reward": 150,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "List comprehensions offer a concise, readable, and efficient way to create lists in a single line.",
+              "xp_reward": 10,
+              "explanation": "They replace traditional `for` loops for list generation."
+            },
+            {
+              "type": "mcq",
+              "content": "Which comprehension style creates an immutable collection of unique elements?",
+              "choices": ["List", "Dictionary", "Set", "Tuple"],
+              "correct_choice_index": 2,
+              "xp_reward": 10,
+              "explanation": "Set comprehensions use `{}` and enforce uniqueness."
+            },
+            {
+              "type": "code",
+              "content": "Use a list comprehension to create a list of even numbers from 0 up to 10 (inclusive).",
+              "xp_reward": 40,
+              "starter_code": "evens = [i for i in range(11) if i % 2 == 0]\nprint(evens)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "[0, 2, 4, 6, 8, 10]"
+                }
+              ],
+              "explanation": "The format is `[expression for item in iterable if condition]`."
+            },
+            {
+              "type": "theory",
+              "content": "The **`map()`** function applies a given function to every item of an iterable and returns a map object (iterator).",
+              "xp_reward": 10,
+              "explanation": "It's a core concept in functional programming."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The **`filter()`** function constructs an iterator from elements of an iterable for which a function returns _____.",
+              "blanks": ["blank"],
+              "correct_answers": ["True"],
+              "xp_reward": 10,
+              "explanation": "It's used to select elements based on a condition."
+            },
+            {
+              "type": "code",
+              "content": "Use `map()` and a lambda to cube every number in the list `[1, 2, 3]` and print the result.",
+              "xp_reward": 40,
+              "starter_code": "nums = [1, 2, 3]\ncubed = list(map(lambda x: x**3, nums))\nprint(cubed)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "[1, 8, 27]"
+                }
+              ],
+              "explanation": "Convert the map object to a list for printing."
+            },
+            {
+              "type": "theory",
+              "content": "A **generator expression** is similar to a list comprehension but uses parentheses `()` and creates items one at a time, saving memory.",
+              "xp_reward": 10,
+              "explanation": "They are memory-efficient for large data sets."
+            },
+            {
+              "type": "mcq",
+              "content": "What is the key difference between a list comprehension and a generator expression?",
+              "choices": ["Syntax (brackets vs. parentheses)", "Type (list vs. iterator)", "Speed (generator is always faster)", "Immutability"],
+              "correct_choice_index": 1,
+              "xp_reward": 10,
+              "explanation": "Generators produce an iterator, not a complete list."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Advanced Functions and Decorators",
+      "order": 2,
+      "topics": [
+        {
+          "title": "Lambda, Scope, and Arguments",
+          "content": "Explore anonymous functions, variable scope (LEGB rule), and advanced function arguments.",
+          "xp_reward": 150,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "A **`lambda` function** is a small, single-expression anonymous function that cannot contain complex statements.",
+              "xp_reward": 10,
+              "explanation": "They are primarily used for quick, inline function definitions."
+            },
+            {
+              "type": "code",
+              "content": "Use a `lambda` to sort a list of names `['Bob', 'Alice', 'Charlie']` by the length of the name.",
+              "xp_reward": 40,
+              "starter_code": "names = ['Bob', 'Alice', 'Charlie']\nsorted_names = sorted(names, key=lambda x: len(x))\nprint(sorted_names)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "['Bob', 'Alice', 'Charlie']"
+                }
+              ],
+              "explanation": "The shortest name, 'Bob', comes first."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The **LEGB** rule defines the order of scope lookup in Python: Local, Enclosing, Global, and _____.",
+              "blanks": ["blank"],
+              "correct_answers": ["Built-in"],
+              "xp_reward": 10,
+              "explanation": "This determines how Python resolves variable names."
+            },
+            {
+              "type": "mcq",
+              "content": "The `*args` syntax in a function definition is used to accept an arbitrary number of what?",
+              "choices": ["Keyword arguments", "Positional arguments", "Lists", "Dictionaries"],
+              "correct_choice_index": 1,
+              "xp_reward": 10,
+              "explanation": "`*args` collects extra positional arguments into a tuple."
+            },
+            {
+              "type": "theory",
+              "content": "**`**kwargs` collects arbitrary keyword arguments into a dictionary.",
+              "xp_reward": 10,
+              "explanation": "It allows a function to accept flexible configuration options."
+            },
+            {
+              "type": "code",
+              "content": "Define a function that takes `**kwargs` and prints the value of the 'city' key.",
+              "xp_reward": 30,
+              "starter_code": "def print_city(**kwargs):\n    print(kwargs['city'])\n\nprint_city(name='John', city='New York', age=30)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "New York"
+                }
+              ],
+              "explanation": "Access the dictionary: `kwargs['city']`."
+            },
+            {
+              "type": "theory",
+              "content": "The **`global`** keyword is used inside a function to modify a variable defined in the global scope.",
+              "xp_reward": 10,
+              "explanation": "It explicitly bypasses the creation of a local variable."
+            },
+            {
+              "type": "mcq",
+              "content": "What does a function return if no `return` statement is explicitly used?",
+              "choices": ["0", "None", "Null", "An empty string"],
+              "correct_choice_index": 1,
+              "xp_reward": 10,
+              "explanation": "A function without a return statement implicitly returns `None`."
+            },
+            {
+              "type": "theory",
+              "content": "Functions in Python are **first-class citizens**, meaning they can be passed as arguments, returned from other functions, and assigned to variables.",
+              "xp_reward": 10,
+              "explanation": "This is crucial for decorators and functional programming."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "A **closure** is a function object that remembers values in its enclosing scope even if they are no longer present in memory.",
+              "blanks": ["blank"],
+              "correct_answers": ["closure"],
+              "xp_reward": 10,
+              "explanation": "It allows functions to carry around a reference to the environment where they were created."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Introduction to OOP in Python",
+      "order": 3,
+      "topics": [
+        {
+          "title": "Classes, Attributes, and Methods",
+          "content": "Define classes and objects, and understand the difference between instance and class attributes.",
+          "xp_reward": 140,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "A **Class** is a blueprint, and an **Object** is an instance of that blueprint.",
+              "xp_reward": 10,
+              "explanation": "The object is created when the class is called."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The first parameter of an instance method in a Python class is conventionally named _____.",
+              "blanks": ["blank"],
+              "correct_answers": ["self"],
+              "xp_reward": 10,
+              "explanation": "It's a reference to the instance of the class."
+            },
+            {
+              "type": "code",
+              "content": "Create a class `Book` with a class attribute `material` set to 'paper'. Instantiate a book and print its material.",
+              "xp_reward": 40,
+              "starter_code": "class Book:\n    material = 'paper'\n\nbook1 = Book()\nprint(book1.material)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "paper"
+                }
+              ],
+              "explanation": "Class attributes are shared across all instances."
+            },
+            {
+              "type": "theory",
+              "content": "The **`__init__`** method is the constructor; it's automatically called when a new object is created.",
+              "xp_reward": 10,
+              "explanation": "It's used to initialize instance-specific attributes."
+            },
+            {
+              "type": "mcq",
+              "content": "How do you access an instance attribute named 'color' inside a class method?",
+              "choices": ["color", "self.color", "this.color", "__color"],
+              "correct_choice_index": 1,
+              "xp_reward": 10,
+              "explanation": "You must use `self` to access instance attributes."
+            },
+            {
+              "type": "code",
+              "content": "Create a class `Circle` with an `__init__` method that accepts `radius` and initializes it. Instantiate a circle with radius 5.",
+              "xp_reward": 40,
+              "starter_code": "class Circle:\n    def __init__(self, radius):\n        self.radius = radius\n\nc1 = Circle(5)\nprint(c1.radius)",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "5"
+                }
+              ],
+              "explanation": "The constructor is essential for setting up object state."
+            },
+            {
+              "type": "theory",
+              "content": "Instance methods are functions defined within a class that operate on the instance's attributes.",
+              "xp_reward": 10,
+              "explanation": "They are the behaviors of the object."
+            },
+            {
+              "type": "mcq",
+              "content": "What is the process of creating an object from a class called?",
+              "choices": ["Declaration", "Construction", "Instantiation", "Inheritance"],
+              "correct_choice_index": 2,
+              "xp_reward": 10,
+              "explanation": "Instantiation creates an instance (object) of the class."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: OOP: Inheritance and Polymorphism",
+      "order": 4,
+      "topics": [
+        {
+          "title": "Inheritance, Super(), and Method Overriding",
+          "content": "Learn how classes can inherit attributes and methods from other classes.",
+          "xp_reward": 140,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "**Inheritance** allows a child class (subclass) to acquire properties and methods from a parent class (superclass).",
+              "xp_reward": 10,
+              "explanation": "It promotes code reuse and models 'is-a' relationships."
+            },
+            {
+              "type": "mcq",
+              "content": "To define a class `Dog` that inherits from a class `Animal`, which syntax is correct?",
+              "choices": ["class Dog: Animal", "class Dog extends Animal", "class Dog(Animal)", "class Dog inherits Animal"],
+              "correct_choice_index": 2,
+              "xp_reward": 10,
+              "explanation": "Inheritance is defined by putting the parent class in parentheses."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The **`super()`** function is used to call methods (especially `__init__`) from the parent class.",
+              "blanks": ["blank"],
+              "correct_answers": ["super"],
+              "xp_reward": 10,
+              "explanation": "This ensures the parent's initialization logic runs."
+            },
+            {
+              "type": "theory",
+              "content": "**Method Overriding** occurs when a subclass provides a specific implementation for a method that is already defined in its superclass.",
+              "xp_reward": 10,
+              "explanation": "It allows a child object to exhibit specific behavior."
+            },
+            {
+              "type": "code",
+              "content": "Define `Animal` with a `sound()` method returning 'Generic sound'. Define `Cat` inheriting from `Animal` and override `sound()` to return 'Meow'.",
+              "xp_reward": 60,
+              "starter_code": "class Animal:\n    def sound(self):\n        return 'Generic sound'\n\nclass Cat(Animal):\n    def sound(self):\n        return 'Meow'\n\ncat = Cat()\nprint(cat.sound())",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "Meow"
+                }
+              ],
+              "explanation": "The `Cat` class's method takes precedence."
+            },
+            {
+              "type": "theory",
+              "content": "**Polymorphism** means 'many forms' and refers to the ability of objects of different classes to respond to the same method call.",
+              "xp_reward": 10,
+              "explanation": "Achieved through method overriding and duck typing."
+            },
+            {
+              "type": "mcq",
+              "content": "If you override the `__init__` method in a child class, what is typically the first call you make inside it?",
+              "choices": ["self.attr_init()", "return", "super().__init__()", "pass"],
+              "correct_choice_index": 2,
+              "xp_reward": 10,
+              "explanation": "Calling the parent's constructor ensures all inherited attributes are set."
+            },
+            {
+              "type": "theory",
+              "content": "**Encapsulation** is the principle of bundling data (attributes) and the methods (behaviors) that operate on the data into a single unit (class).",
+              "xp_reward": 10,
+              "explanation": "In Python, access restrictions are by convention (using single or double underscores)."
+            },
+            {
+              "type": "theory",
+              "content": "Python's use of **double underscores** (`__variable`) for attributes results in name mangling, making the attribute harder, but not impossible, to access from outside the class.",
+              "xp_reward": 10,
+              "explanation": "This is Python's way of implementing a form of privacy."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Error Handling and File I/O",
+      "order": 5,
+      "topics": [
+        {
+          "title": "Try/Except and Custom Errors",
+          "content": "Learn robust error handling using `try`, `except`, `finally`, and creating custom exceptions.",
+          "xp_reward": 130,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "The **`try...except`** block is used to gracefully handle runtime errors (exceptions) without crashing the program.",
+              "xp_reward": 10,
+              "explanation": "Code that might raise an error is placed in the `try` block."
+            },
+            {
+              "type": "mcq",
+              "content": "Which built-in exception is raised when you try to access a non-existent key in a dictionary?",
+              "choices": ["ValueError", "TypeError", "KeyError", "IndexError"],
+              "correct_choice_index": 2,
+              "xp_reward": 10,
+              "explanation": "A `KeyError` is specific to dictionaries."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The **`finally`** block executes regardless of whether an exception occurred in the `try` block or not.",
+              "blanks": ["blank"],
+              "correct_answers": ["finally"],
+              "xp_reward": 10,
+              "explanation": "It is often used for cleanup operations like closing files."
+            },
+            {
+              "type": "code",
+              "content": "Use a `try-except` block to handle a `ZeroDivisionError` when calculating 10 / 0. Print 'Cannot divide by zero'.",
+              "xp_reward": 50,
+              "starter_code": "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "Cannot divide by zero"
+                }
+              ],
+              "explanation": "The `except` block catches the specific error."
+            },
+            {
+              "type": "theory",
+              "content": "The **`else`** block in a `try...except` statement executes only if the code in the `try` block finishes *without* raising an exception.",
+              "xp_reward": 10,
+              "explanation": "It helps separate error-free code from the `try` block."
+            },
+            {
+              "type": "mcq",
+              "content": "Which statement is used to manually trigger an exception?",
+              "choices": ["throw", "raise", "except", "error"],
+              "correct_choice_index": 1,
+              "xp_reward": 10,
+              "explanation": "The `raise` statement forces an exception to occur."
+            }
+          ]
+        },
+        {
+          "title": "File Reading and Writing",
+          "content": "Learn to perform basic Input/Output operations by reading from and writing to files.",
+          "xp_reward": 100,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "The **`open()`** function is used to open a file. It returns a file object.",
+              "xp_reward": 10,
+              "explanation": "It takes the filename and the access mode (e.g., 'r', 'w', 'a')."
+            },
+            {
+              "type": "fill-in-blank",
+              "content": "The access mode **'w'** is used for writing to a file; if the file already exists, it is _____.",
+              "blanks": ["blank"],
+              "correct_answers": ["overwritten"],
+              "xp_reward": 10,
+              "explanation": "Use 'a' (append) to add content without overwriting."
+            },
+            {
+              "type": "theory",
+              "content": "The **`with open(...)`** statement is the preferred way to handle file operations because it ensures the file is automatically closed, even if errors occur.",
+              "xp_reward": 10,
+              "explanation": "This uses a context manager and prevents resource leaks."
+            },
+            {
+              "type": "code",
+              "content": "Use the `with open` statement to write the text 'Python' to a file named 'output.txt'.",
+              "xp_reward": 40,
+              "starter_code": "with open('output.txt', 'w') as f:\n    f.write('Python')",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": ""
+                }
+              ],
+              "explanation": "The challenge tests the use of the context manager."
+            },
+            {
+              "type": "mcq",
+              "content": "Which method is used to read the entire contents of a file into a single string?",
+              "choices": ["f.read_line()", "f.read_all()", "f.readlines()", "f.read()"],
+              "correct_choice_index": 3,
+              "xp_reward": 10,
+              "explanation": "The `f.read()` method reads the whole file."
+            },
+            {
+              "type": "theory",
+              "content": "The method **`f.readlines()`** returns a list where each element is a line in the file.",
+              "xp_reward": 10,
+              "explanation": "This is useful for processing files line by line."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "learn-quest",
+  "version": "1.0.0",
+  "description": "AI-powered learning management system with code execution capabilities",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "docker-compose up",
+    "dev:web": "npm run dev --workspace=apps/web-frontend",
+    "dev:admin": "npm run dev --workspace=apps/admin-frontend",
+    "dev:api": "npm run dev --workspace=services/api",
+    "build": "npm run build --workspaces",
+    "build:web": "npm run build --workspace=apps/web-frontend",
+    "build:admin": "npm run build --workspace=apps/admin-frontend",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "clean": "npm run clean --workspaces && rm -rf node_modules",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "seed": "node scripts/seed-data.js",
+    "dummy-script": ""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/learn-quest.git"
+  },
+  "keywords": [
+    "learning",
+    "education",
+    "lms",
+    "ai",
+    "code-execution"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.6.0",
+    "framer-motion": "^12.23.24",
+    "mongodb": "^6.20.0"
+  }
+}

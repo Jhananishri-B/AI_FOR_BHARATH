@@ -1,0 +1,2 @@
+// Admin frontend placeholder
+export {}

@@ -1,0 +1,78 @@
+{
+  "title": "Python Programming Basics",
+  "description": "Learn the fundamentals of Python programming with hands-on exercises and coding challenges.",
+  "xp_reward": 100,
+  "modules": [
+    {
+      "title": "Getting Started",
+      "order": 1,
+      "topics": [
+        {
+          "title": "Introduction to Python",
+          "content": "Welcome to Python programming! In this lesson, you'll learn the basics of Python syntax and structure.",
+          "xp_reward": 25,
+          "cards": [
+            {
+              "type": "theory",
+              "content": "Python is a high-level, interpreted programming language known for its simplicity and readability.",
+              "xp_reward": 10,
+              "explanation": "Python's design philosophy emphasizes code readability and simplicity."
+            },
+            {
+              "type": "code",
+              "content": "Write a Python program that prints 'Hello, World!' to the console.",
+              "xp_reward": 15,
+              "explanation": "This is your first Python program!",
+              "starter_code": "# Your code here\nprint('Hello, World!')",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "Hello, World!"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Variables and Data Types",
+      "order": 2,
+      "topics": [
+        {
+          "title": "Understanding Variables",
+          "content": "Learn how to create and use variables in Python.",
+          "xp_reward": 30,
+          "cards": [
+            {
+              "type": "mcq",
+              "content": "What is the correct way to assign a value to a variable in Python?",
+              "xp_reward": 10,
+              "explanation": "In Python, you use the assignment operator (=) to assign values to variables.",
+              "choices": [
+                "var = 5",
+                "var := 5",
+                "var -> 5",
+                "var <- 5"
+              ],
+              "correct_choice_index": 0
+            },
+            {
+              "type": "code",
+              "content": "Create a variable called 'name' and assign your name to it, then print it.",
+              "xp_reward": 20,
+              "explanation": "Variables store data that can be used later in your program.",
+              "starter_code": "# Create a variable called 'name' and assign your name to it\n# Then print the variable\n\n",
+              "test_cases": [
+                {
+                  "input": "",
+                  "expected_output": "John"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

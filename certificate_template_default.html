@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- This is a dummy comment for commit purposes -->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnQuest Certificate</title>
+
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Playfair Display", Georgia, serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .certificate {
+    width: 297mm;
+    height: 210mm;
+    background: #fff;
+    padding: 60px;
+    position: relative;
+    border: 10px solid #d4af37;
+    outline: 6px solid #222;
+    background-image: url("https://www.transparenttextures.com/patterns/white-paperboard.png");
+    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+  }
+
+  /* Gold inner border */
+  .certificate::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    border: 4px dashed #caa944;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .logo {
+    font-size: 54px;
+    font-weight: bold;
+    color: #caa944;
+    margin: 0 auto 15px;
+    border: 3px solid #caa944;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .certificate-title {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #111;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: #444;
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  .content {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .presented-to {
+    font-size: 16px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .recipient-name {
+    font-size: 60px;
+    font-weight: bold;
+    color: #222;
+    margin: 10px 0;
+    font-family: "Great Vibes", cursive;
+  }
+
+  .certification-text {
+    font-size: 22px;
+    color: #444;
+    margin-top: 10px;
+  }
+
+  .certification-name {
+    font-size: 38px;
+    font-weight: bold;
+    color: #caa944;
+    text-transform: uppercase;
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
+  .difficulty-badge {
+    display: inline-block;
+    background: #caa944;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 50px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 20px 20px;
+  }
+
+  .detail-item {
+    text-align: center;
+    flex: 1;
+  }
+
+  .detail-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .detail-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #111;
+  }
+
+  .signature-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 55px;
+    padding: 0 80px;
+  }
+
+  .signature {
+    text-align: center;
+    flex: 1;
+  }
+
+  .signature-line {
+    width: 200px;
+    height: 2px;
+    background: #222;
+    margin: 0 auto 10px;
+  }
+
+  .signature-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #111;
+  }
+
+  .signature-title {
+    font-size: 13px;
+    color: #555;
+    font-style: italic;
+  }
+</style>
+</head>
+
+<body>
+<div class="certificate">
+
+  <div class="header">
+    <div class="logo">LQ</div>
+    <div class="certificate-title">Certificate of Achievement</div>
+    <div class="subtitle">LearnQuest Certification Program</div>
+  </div>
+
+  <div class="content">
+    <div class="presented-to">This certifies that</div>
+    <div class="recipient-name">{{USER_NAME}}</div>
+    
+    <div class="certification-text">has successfully completed the</div>
+    
+    <div class="certification-name">{{CERTIFICATION_NAME}}</div>
+    
+    <div class="difficulty-badge">{{DIFFICULTY}} Level</div>
+
+    <div class="details">
+      <div class="detail-item">
+        <div class="detail-label">Score</div>
+        <div class="detail-value">{{SCORE}}%</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Pass Mark</div>
+        <div class="detail-value">{{PASS_PERCENTAGE}}%</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Completion Date</div>
+        <div class="detail-value">{{DATE}}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Certificate ID</div>
+        <div class="detail-value">{{CERTIFICATE_ID}}</div>
+      </div>
+    </div>
+
+    <div class="signature-section">
+      <div class="signature">
+        <div class="signature-line"></div>
+        <div class="signature-name">Prabanand S Chelladurai</div>
+        <div class="signature-title">Program Director</div>
+      </div>
+      <div class="signature">
+        <div class="signature-line"></div>
+        <div class="signature-name">Dr. Nataraj N</div>
+        <div class="signature-title">Chief Academic Officer</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

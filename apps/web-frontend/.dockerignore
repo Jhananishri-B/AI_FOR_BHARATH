@@ -1,0 +1,4 @@
+# Ignore dependencies, build output, and local env files
+node_modules
+dist
+.env

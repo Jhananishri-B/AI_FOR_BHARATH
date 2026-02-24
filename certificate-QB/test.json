@@ -1,0 +1,59 @@
+[
+  {
+    "type": "code",
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+    "difficulty": "Easy",
+    "topic_name": "Arrays",
+    "tags": ["array", "hash-map", "two-pointers"],
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Exactly one solution exists."
+    ],
+    "function_signature": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:",
+      "javascript": "function twoSum(nums, target) { /* return [i, j] */ }",
+      "java": "int[] twoSum(int[] nums, int target)"
+    },
+    "starter_code": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:\n    # write your code here\n    pass",
+      "javascript": "function twoSum(nums, target) {\n  // write your code here\n}",
+      "java": "class Solution {\n  public int[] twoSum(int[] nums, int target) {\n    // write your code here\n    return new int[]{};\n  }\n}"
+    },
+    "languages_allowed": ["python", "javascript", "java"],
+    "time_limit_ms": 2000,
+    "memory_limit_mb": 256,
+    "evaluation": {
+      "mode": "auto", 
+      "negative_marking": false,
+      "marks": {
+        "total": 100
+      }
+    },
+    "test_cases": [
+      {
+        "id": "tc1",
+        "input": { "nums": [2,7,11,15], "target": 9 },
+        "expected_output": [0,1],
+        "is_hidden": false,
+        "weight": 1
+      },
+      {
+        "id": "tc2",
+        "input": { "nums": [3,2,4], "target": 6 },
+        "expected_output": [1,2],
+        "is_hidden": false,
+        "weight": 1
+      },
+      {
+        "id": "tc3",
+        "input": { "nums": [3,3], "target": 6 },
+        "expected_output": [0,1],
+        "is_hidden": true,
+        "weight": 1
+      }
+    ]
+  }
+]
