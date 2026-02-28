@@ -13,6 +13,24 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+// Handle expired / invalid tokens
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      const currentToken = localStorage.getItem('token')
+      if (currentToken) {
+        // Token is present but rejected — it has expired or is invalid
+        localStorage.removeItem('token')
+        localStorage.removeItem('admin_user')
+        // Redirect to admin login page
+        window.location.href = '/admin'
+      }
+    }
+    return Promise.reject(error)
+  }
+)
+
 export const adminAPI = {
   // Users
   listUsers: () => api.get('/api/admin/users/'),
@@ -81,15 +99,15 @@ export const adminCertTestsAPI = {
     }),
   setSpecActive: (certId, difficulty, active) =>
     api.patch(`/api/admin/cert-tests/specs/${certId}/${difficulty}/status`, { active }),
-  
+
   // Test Attempts (Results)
   getAllAttempts: () => api.get('/api/cert-tests/attempts'),
   getAttempt: (attemptId) => api.get(`/api/cert-tests/attempts/${attemptId}`),
-  
+
   // Certificate Management
-  sendBulkCertificates: (attemptIds) => 
+  sendBulkCertificates: (attemptIds) =>
     api.post('/api/admin/cert-tests/certificates/send-bulk', { attempt_ids: attemptIds }),
-  getCertificateStats: () => 
+  getCertificateStats: () =>
     api.get('/api/admin/cert-tests/certificates/stats'),
   updateCertificateStatus: (attemptId, payload) =>
     api.patch(`/api/admin/cert-tests/certificates/${attemptId}/status`, payload),

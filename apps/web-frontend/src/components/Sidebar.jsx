@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Home, 
-  BookOpen, 
-  Trophy, 
-  User, 
+import {
+  Home,
+  BookOpen,
+  Trophy,
+  User,
   LogOut,
   Zap,
   Sparkles,
@@ -52,11 +52,10 @@ const Sidebar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                isActive(item.href)
+              className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive(item.href)
                   ? 'bg-blue-600 text-white'
                   : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
+                }`}
             >
               <Icon className="w-5 h-5 mr-3" />
               {item.name}
@@ -93,7 +92,7 @@ const Sidebar = () => {
             <span className="text-orange-400 font-semibold">{user?.streak_count || 0}</span>
           </div>
           <div className="w-full bg-slate-700 rounded-full h-2">
-            <div 
+            <div
               className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${Math.min((user?.streak_count || 0) * 10, 100)}%` }}
             />
@@ -107,7 +106,7 @@ const Sidebar = () => {
             <span>{user?.xp || 0} XP</span>
           </div>
           <div className="w-full bg-slate-700 rounded-full h-2">
-            <div 
+            <div
               className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${Math.min(((user?.xp || 0) % 1000) / 10, 100)}%` }}
             />
@@ -116,7 +115,7 @@ const Sidebar = () => {
 
         {/* Logout Button */}
         <button
-          onClick={logout}
+          onClick={() => { logout(); window.location.href = '/login'; }}
           className="flex items-center w-full px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
         >
           <LogOut className="w-4 h-4 mr-3" />

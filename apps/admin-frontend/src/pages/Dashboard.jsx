@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { 
-  Users, 
-  Award, 
-  BookOpen, 
-  BarChart3, 
-  TrendingUp, 
+import {
+  Users,
+  Award,
+  BookOpen,
+  BarChart3,
+  TrendingUp,
   Clock,
   CheckCircle,
   AlertCircle,
@@ -64,7 +64,7 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true)
-      
+
       // Fetch multiple endpoints in parallel
       const [usersRes, certsRes, coursesRes, questionsRes, attemptsRes] = await Promise.all([
         fetch(`${API_BASE_URL}/api/admin/users/`, {
@@ -84,7 +84,7 @@ const Dashboard = () => {
         })
       ])
 
-      const [users, certs, courses, questions, attempts] = await Promise.all([
+      const [usersDataRaw, certsData, coursesData, questionsData, attemptsDataRaw] = await Promise.all([
         usersRes.ok ? usersRes.json() : [],
         certsRes.ok ? certsRes.json() : [],
         coursesRes.ok ? coursesRes.json() : [],
@@ -92,7 +92,13 @@ const Dashboard = () => {
         attemptsRes.ok ? attemptsRes.json() : []
       ])
 
-      const passRate = attempts.length > 0 
+      const users = Array.isArray(usersDataRaw) ? usersDataRaw : []
+      const certs = Array.isArray(certsData) ? certsData : []
+      const courses = Array.isArray(coursesData) ? coursesData : []
+      const questions = Array.isArray(questionsData) ? questionsData : []
+      const attempts = Array.isArray(attemptsDataRaw) ? attemptsDataRaw : []
+
+      const passRate = attempts.length > 0
         ? Math.round((attempts.filter(a => a.passed).length / attempts.length) * 100)
         : 0
 
@@ -124,9 +130,9 @@ const Dashboard = () => {
         const dateB = new Date(b.last_active_date)
         return dateB - dateA
       }).slice(0, 10)
-      
+
       setActiveUsers(activeUsersList)
-      
+
       // Store attempts for charts
       setAttemptsData(attempts)
       setUsersData(users)
@@ -274,7 +280,7 @@ const Dashboard = () => {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: { 
+        ticks: {
           color: 'rgb(148, 163, 184)',
           stepSize: 1
         },
@@ -305,7 +311,7 @@ const Dashboard = () => {
     plugins: {
       legend: {
         position: 'bottom',
-        labels: { 
+        labels: {
           color: 'rgb(203, 213, 225)',
           padding: 15,
           font: { size: 12 }
@@ -423,7 +429,7 @@ const Dashboard = () => {
           <div className="p-4 bg-slate-700/50 rounded-lg">
             <div className="text-slate-400 text-sm mb-2">Avg. Score</div>
             <div className="text-2xl font-bold text-yellow-400">
-              {attemptsData.length > 0 ? 
+              {attemptsData.length > 0 ?
                 Math.round(attemptsData.reduce((sum, a) => sum + (a.score || 0), 0) / attemptsData.length) : 0}%
             </div>
             <div className="text-xs text-slate-500 mt-1">All time</div>
@@ -453,10 +459,10 @@ const Dashboard = () => {
               activeUsers.map((user, index) => {
                 const lastActive = new Date(user.last_active_date)
                 const minutesAgo = Math.floor((new Date() - lastActive) / 1000 / 60)
-                const timeAgo = minutesAgo < 1 ? 'Just now' : 
-                               minutesAgo === 1 ? '1 min ago' : 
-                               `${minutesAgo} mins ago`
-                
+                const timeAgo = minutesAgo < 1 ? 'Just now' :
+                  minutesAgo === 1 ? '1 min ago' :
+                    `${minutesAgo} mins ago`
+
                 return (
                   <div key={index} className="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors">
                     <div className="relative">

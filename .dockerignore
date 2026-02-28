@@ -1,0 +1,30 @@
+# Exclude node_modules from all frontend apps (they are installed inside Docker)
+apps/web-frontend/node_modules
+apps/admin-frontend/node_modules
+
+# Exclude local build outputs (Docker does its own build)
+apps/web-frontend/dist
+apps/admin-frontend/dist
+
+# Git history not needed in image
+.git
+
+# Local env files (secrets are injected via env_file in compose)
+.env
+*.env.local
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Database exports and large local files
+database_export_*.zip
+database_exports/
+
+# IDE / OS files
+.vscode
+.idea
+*.DS_Store

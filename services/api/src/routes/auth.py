@@ -49,8 +49,9 @@ async def login(request: LoginRequest):
                 detail="Invalid credentials"
             )
         
-        # Create access token
-        access_token_expires = timedelta(minutes=30)
+        # Create access token using centrally configured expiry
+        from ..auth import ACCESS_TOKEN_EXPIRE_MINUTES
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
             data={"sub": str(user_data["_id"])}, 
             expires_delta=access_token_expires

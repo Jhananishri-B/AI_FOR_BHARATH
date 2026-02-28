@@ -76,6 +76,35 @@ def create_sample_user(db):
     print(f"Created sample user: {result.inserted_id}")
     return result.inserted_id
 
+def ensure_admin_user(db):
+    """Create the dedicated admin panel user if it doesn't already exist.
+    Does NOT modify any existing users or data."""
+    users_collection = db.users
+
+    existing = users_collection.find_one({"email": "admin@learnquest.com"})
+    if existing:
+        print("Admin user (admin@learnquest.com) already exists — skipping.")
+        return existing["_id"]
+
+    admin_data = {
+        "name": "Admin",
+        "email": "admin@learnquest.com",
+        "password": hash_password("123"),
+        "role": "admin",
+        "avatar_url": None,
+        "auth_provider": "email",
+        "xp": 0,
+        "level": 1,
+        "enrolled_courses": [],
+        "quiz_history": [],
+        "badges": [],
+        "created_at": datetime.utcnow(),
+    }
+
+    result = users_collection.insert_one(admin_data)
+    print(f"Created admin user (admin@learnquest.com): {result.inserted_id}")
+    return result.inserted_id
+
 def create_sample_courses(db):
     """Create sample courses with modules"""
     courses_collection = db.courses
@@ -403,6 +432,9 @@ def main():
         
         # Create sample user
         user_id = create_sample_user(db)
+
+        # Ensure the dedicated admin panel user exists (safe: only creates if not present)
+        ensure_admin_user(db)
         
         # Create sample courses
         course_ids = create_sample_courses(db)

@@ -33,12 +33,12 @@ export const AuthProvider = ({ children }) => {
         try {
           const response = await authAPI.getMe();
           const userData = response.data;
-          
+
           // Fetch additional progress data
           try {
             const progressResponse = await lessonsAPI.getUserProgress();
             const progressData = progressResponse.data;
-            
+
             // Merge progress data with user data
             setUser({
               ...userData,
@@ -64,18 +64,18 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authAPI.login(email, password);
       const { access_token, user: userData } = response.data;
-      
+
       localStorage.setItem('token', access_token);
       setToken(access_token);
       setUser(userData);
       setLoginResponse(response.data);
-      
-      return { success: true };
+
+      return { success: true, user: userData };
     } catch (error) {
       console.error('Login failed:', error);
-      return { 
-        success: false, 
-        error: error.response?.data?.detail || 'Login failed' 
+      return {
+        success: false,
+        error: error.response?.data?.detail || 'Login failed'
       };
     }
   };
@@ -84,14 +84,14 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authAPI.getGoogleAuthUrl();
       const { auth_url } = response.data;
-      
+
       // Redirect to Google OAuth
       window.location.href = auth_url;
     } catch (error) {
       console.error('Google login failed:', error);
-      return { 
-        success: false, 
-        error: error.response?.data?.detail || 'Google login failed' 
+      return {
+        success: false,
+        error: error.response?.data?.detail || 'Google login failed'
       };
     }
   };
@@ -100,24 +100,26 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authAPI.googleCallback(code);
       const { access_token, user: userData } = response.data;
-      
+
       localStorage.setItem('token', access_token);
       setToken(access_token);
       setUser(userData);
       setLoginResponse(response.data);
-      
+
       return { success: true };
     } catch (error) {
       console.error('Google callback failed:', error);
-      return { 
-        success: false, 
-        error: error.response?.data?.detail || 'Google authentication failed' 
+      return {
+        success: false,
+        error: error.response?.data?.detail || 'Google authentication failed'
       };
     }
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('admin_user');
+    localStorage.removeItem('user');
     setToken(null);
     setUser(null);
   };
