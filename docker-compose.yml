@@ -62,7 +62,7 @@ services:
   judge0:
     image: judge0/judge0:1.13.0
     ports:
-      - "2358:2358"
+      - "2359:2358"
     environment:
       - POSTGRES_DB=judge0
       - POSTGRES_USER=judge0

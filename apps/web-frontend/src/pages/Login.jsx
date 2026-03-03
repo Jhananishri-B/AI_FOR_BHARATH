@@ -28,22 +28,22 @@ const Login = () => {
     }
   }, [searchParams, handleGoogleCallback, navigate]);
 
-  // Redirect if already authenticated AND we are not currently processing a login
-  if (isAuthenticated && !loading) {
-    // Admin users must go to admin panel, not the student app
-    if (user?.email === 'admin@learnquest.com') {
-      window.location.replace('/admin/dashboard');
-      return null;
-    }
-    return <Navigate to="/dashboard" replace />;
-  }
-
+  // 1. While AuthContext is booting (verifying stored token), show spinner
   if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-900">
         <Loader2 className="animate-spin text-blue-500 w-12 h-12" />
       </div>
     );
+  }
+
+  // 2. Already authenticated — redirect to the right place
+  if (isAuthenticated) {
+    if (user?.email === 'admin@learnquest.com') {
+      window.location.replace('/admin/dashboard');
+      return null;
+    }
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleSubmit = async (e) => {
@@ -54,11 +54,14 @@ const Login = () => {
     const result = await login(email, password);
 
     if (result.success) {
-      if (result.user?.email === 'admin@learnquest.com') {
-        // Admin users: store the explicit admin_user key for quick root redirect
+      const userEmail = result.user?.email || '';
+
+      if (userEmail === 'admin@learnquest.com') {
+        // Admin: store token hint, then do a full-page redirect to the separate admin SPA
         localStorage.setItem('admin_user', JSON.stringify(result.user));
-        // Full page redirect because /admin is a separate compiled React app served by nginx
+        // Use window.location.href so the entire page reloads and nginx serves the admin SPA
         window.location.href = '/admin/dashboard';
+        return; // stop here — no further state updates needed
       } else {
         navigate('/dashboard');
       }
