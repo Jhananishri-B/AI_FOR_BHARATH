@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 // Configure base URL for API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Empty string = relative URL → calls go through nginx /api/ proxy → no CORS issues
+// In dev, set VITE_API_URL=http://localhost:8000 in .env.local for direct access
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -111,9 +113,9 @@ export const problemsAPI = {
 export const certificationsAPI = {
   getCertifications: () => api.get('/api/certifications'),
   startTest: (specId) => api.post('/api/certifications/start', { spec_id: specId }),
-  submitTest: (attemptId, answers) => api.post('/api/certifications/submit', { 
-    attempt_id: attemptId, 
-    answers 
+  submitTest: (attemptId, answers) => api.post('/api/certifications/submit', {
+    attempt_id: attemptId,
+    answers
   }),
   logEvent: (attemptId, event) => api.post('/api/certifications/event', {
     attempt_id: attemptId,
@@ -130,8 +132,8 @@ export const certificationsAPI = {
 // Cert Tests API (new system)
 export const certTestsAPI = {
   getSpecs: () => api.get('/api/cert-tests/specs'),
-  startAttempt: (topicId, difficulty, userName) => api.post('/api/cert-tests/attempts', { 
-    topic_id: topicId, 
+  startAttempt: (topicId, difficulty, userName) => api.post('/api/cert-tests/attempts', {
+    topic_id: topicId,
     difficulty: difficulty,
     user_name: userName
   }),
@@ -140,7 +142,7 @@ export const certTestsAPI = {
     question_id: questionId,
     answer: answer
   }),
-  finishAttempt: (attemptId, mcqAnswers = {}) => api.post('/api/cert-tests/finish', { 
+  finishAttempt: (attemptId, mcqAnswers = {}) => api.post('/api/cert-tests/finish', {
     attempt_id: attemptId,
     mcq_answers: mcqAnswers
   }),

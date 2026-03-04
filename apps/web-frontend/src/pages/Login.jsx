@@ -14,15 +14,19 @@ const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const callbackProcessed = React.useRef(false);
+
   // Handle Google OAuth callback
   useEffect(() => {
     const code = searchParams.get('code');
-    if (code) {
+    if (code && !callbackProcessed.current) {
+      callbackProcessed.current = true;
       handleGoogleCallback(code).then(result => {
         if (result.success) {
           navigate('/courses');
         } else {
           setError(result.error);
+          callbackProcessed.current = false; // Reset if it failed
         }
       });
     }

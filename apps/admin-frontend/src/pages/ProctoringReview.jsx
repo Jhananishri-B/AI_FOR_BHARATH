@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // Removed: import { toast } from 'sonner';
 import { Eye, AlertTriangle, Shield, TrendingDown, Clock, User } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 const ProctoringReview = () => {
   const [attempts, setAttempts] = useState([]);

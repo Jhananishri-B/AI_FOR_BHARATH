@@ -46,7 +46,7 @@ export const TestResults = ({ topic, difficulty, userName, testData, onReturnHom
   const requestReview = async () => {
     setRequestingReview(true);
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
       const response = await fetch(`${API_BASE_URL}/api/cert-tests/attempts/${testData.attempt_id}/request-review`, {
         method: 'POST',
         headers: {

@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 import { usersAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
-import { 
-  Zap, 
-  Trophy, 
-  BookOpen, 
-  Star, 
-  TrendingUp, 
-  Target, 
-  Award, 
+import {
+  Zap,
+  Trophy,
+  BookOpen,
+  Star,
+  TrendingUp,
+  Target,
+  Award,
   Clock,
   Loader2,
   AlertCircle,
@@ -45,6 +45,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  Filler,
 } from 'chart.js';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 
@@ -57,7 +58,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
+  Filler
 );
 
 const Dashboard = () => {
@@ -263,13 +265,13 @@ const Dashboard = () => {
         >
           <div className="flex items-center justify-between">
             <div>
-          <h1 className="text-4xl font-bold text-white mb-2">
+              <h1 className="text-4xl font-bold text-white mb-2">
                 Welcome back, {user?.name}! 👋
-          </h1>
-          <p className="text-slate-400 text-lg">
-            Ready to continue your learning journey?
-          </p>
-        </div>
+              </h1>
+              <p className="text-slate-400 text-lg">
+                Ready to continue your learning journey?
+              </p>
+            </div>
             <div className="flex items-center gap-4">
               <Link
                 to="/coach"
@@ -298,11 +300,10 @@ const Dashboard = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeTab === tab
+                className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${activeTab === tab
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'text-slate-400 hover:text-white hover:bg-slate-700'
-                }`}
+                  }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </button>
@@ -383,7 +384,7 @@ const Dashboard = () => {
           <div className="lg:col-span-2 space-y-8">
             {activeTab === 'overview' && (
               <>
-            {/* Level Progress */}
+                {/* Level Progress */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -399,25 +400,25 @@ const Dashboard = () => {
                       <span className="text-slate-400">Level</span>
                       <span className="text-2xl font-bold text-blue-400">{user?.level || Math.floor(currentXP / 1000) + 1}</span>
                     </div>
-              </div>
-              <div className="mb-4">
-                <div className="flex justify-between text-sm text-slate-400 mb-2">
+                  </div>
+                  <div className="mb-4">
+                    <div className="flex justify-between text-sm text-slate-400 mb-2">
                       <span>{currentXP.toLocaleString()} XP</span>
                       <span>{nextLevelXP.toLocaleString()} XP</span>
-                </div>
+                    </div>
                     <div className="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
-                      <motion.div 
+                      <motion.div
                         className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-4 rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${progressPercentage}%` }}
                         transition={{ duration: 1, delay: 0.5 }}
-                  />
-                </div>
-              </div>
+                      />
+                    </div>
+                  </div>
                   <div className="flex items-center justify-between">
-              <p className="text-slate-400 text-sm">
-                {nextLevelXP - currentXP} XP until next level
-              </p>
+                    <p className="text-slate-400 text-sm">
+                      {nextLevelXP - currentXP} XP until next level
+                    </p>
                     <div className="flex items-center gap-1 text-yellow-400">
                       <Star className="w-4 h-4" />
                       <span className="text-sm font-medium">+{stats.weekly_xp} this week</span>
@@ -446,10 +447,10 @@ const Dashboard = () => {
                   </div>
                   <div className="h-64">
                     <Line data={weeklyChartData} options={chartOptions} />
-            </div>
+                  </div>
                 </motion.div>
 
-            {/* Recent Activity */}
+                {/* Recent Activity */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -491,11 +492,10 @@ const Dashboard = () => {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className={`text-lg font-semibold ${
-                              activity.score >= 90 ? 'text-green-400' : 
-                              activity.score >= 80 ? 'text-blue-400' : 
-                              activity.score >= 70 ? 'text-yellow-400' : 'text-red-400'
-                            }`}>
+                            <div className={`text-lg font-semibold ${activity.score >= 90 ? 'text-green-400' :
+                                activity.score >= 80 ? 'text-blue-400' :
+                                  activity.score >= 70 ? 'text-yellow-400' : 'text-red-400'
+                              }`}>
                               {activity.score}%
                             </div>
                             <div className="text-sm text-slate-400">Score</div>
@@ -503,21 +503,21 @@ const Dashboard = () => {
                         </motion.div>
                       ))}
                     </div>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <BookOpen className="w-8 h-8 text-slate-400" />
-                  </div>
-                  <p className="text-slate-400 mb-4">No recent activity</p>
-                  <Link
-                    to="/courses"
-                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors"
-                  >
+                  ) : (
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <BookOpen className="w-8 h-8 text-slate-400" />
+                      </div>
+                      <p className="text-slate-400 mb-4">No recent activity</p>
+                      <Link
+                        to="/courses"
+                        className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+                      >
                         Start your first lesson!
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </div>
-              )}
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </div>
+                  )}
                 </motion.div>
               </>
             )}
@@ -642,23 +642,20 @@ const Dashboard = () => {
                   {achievements.map((achievement) => (
                     <div
                       key={achievement.id}
-                      className={`p-4 rounded-lg border transition-all duration-300 ${
-                        achievement.earned
+                      className={`p-4 rounded-lg border transition-all duration-300 ${achievement.earned
                           ? 'bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border-yellow-500/50'
                           : 'bg-slate-700/50 border-slate-600 opacity-60'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-3">
                         <div className="text-2xl">{achievement.icon}</div>
                         <div className="flex-1">
-                          <h3 className={`font-medium ${
-                            achievement.earned ? 'text-white' : 'text-slate-400'
-                          }`}>
+                          <h3 className={`font-medium ${achievement.earned ? 'text-white' : 'text-slate-400'
+                            }`}>
                             {achievement.title}
                           </h3>
-                          <p className={`text-sm ${
-                            achievement.earned ? 'text-slate-300' : 'text-slate-500'
-                          }`}>
+                          <p className={`text-sm ${achievement.earned ? 'text-slate-300' : 'text-slate-500'
+                            }`}>
                             {achievement.description}
                           </p>
                         </div>
@@ -668,7 +665,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   ))}
-            </div>
+                </div>
               </motion.div>
             )}
           </div>
@@ -709,11 +706,11 @@ const Dashboard = () => {
                 <Clock className="w-5 h-5 text-blue-400" />
                 Study Time
               </h3>
-                <div className="space-y-3">
+              <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400">Total Time</span>
                   <span className="text-white font-semibold">{Math.floor(stats.total_study_time / 60)}h {stats.total_study_time % 60}m</span>
-                    </div>
+                </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400">This Week</span>
                   <span className="text-white font-semibold">{Math.floor(stats.weekly_xp / 10)}h</span>
@@ -722,7 +719,7 @@ const Dashboard = () => {
                   <span className="text-slate-400">Avg/Day</span>
                   <span className="text-white font-semibold">{Math.floor(stats.total_study_time / 30)}m</span>
                 </div>
-            </div>
+              </div>
             </motion.div>
 
             {/* Quick Actions */}

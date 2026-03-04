@@ -13,7 +13,7 @@ const Courses = () => {
     setError('')
     try {
       // Reuse public endpoint for listing via web app base if needed; admin only for mutations
-      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/courses/')
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/courses/')
       const data = await res.json()
       setCourses(data)
     } catch (e) {

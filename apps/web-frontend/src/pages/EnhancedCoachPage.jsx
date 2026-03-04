@@ -52,7 +52,7 @@ const EnhancedCoachPage = () => {
 
   const loadTopicRecommendations = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/ai-quiz/recommend-topics`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai-quiz/recommend-topics`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const EnhancedCoachPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/ai/coach`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/coach`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

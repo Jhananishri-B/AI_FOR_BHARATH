@@ -86,7 +86,7 @@ const CourseDetail = () => {
     
     try {
       // Generate AI quiz for this course
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/ai-quiz/generate`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai-quiz/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

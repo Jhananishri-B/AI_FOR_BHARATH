@@ -12,7 +12,7 @@ const CertificationQuestions = () => {
   const [error, setError] = useState(null)
   const [saving, setSaving] = useState(false)
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  const API_BASE_URL = import.meta.env.VITE_API_URL || ''
 
   useEffect(() => {
     fetchData()

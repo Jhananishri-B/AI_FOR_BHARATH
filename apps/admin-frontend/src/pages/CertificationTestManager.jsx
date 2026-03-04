@@ -75,7 +75,7 @@ const CertificationTestManager = () => {
       const [banksRes, specsRes, coursesRes] = await Promise.all([
         adminCertTestsAPI.listBanks(),
         adminCertTestsAPI.listSpecs(),
-        fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/courses/', {
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/courses/', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token') || ''}` }
         })
       ])

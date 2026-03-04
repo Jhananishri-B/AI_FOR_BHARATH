@@ -16,7 +16,7 @@ const CertificationQuestionsEnhanced = () => {
   const [questionCount, setQuestionCount] = useState(20)
   const [saving, setSaving] = useState(false)
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  const API_BASE_URL = import.meta.env.VITE_API_URL || ''
 
   useEffect(() => {
     fetchCertification()

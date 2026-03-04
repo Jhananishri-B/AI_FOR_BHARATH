@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Search, Filter, Eye, CheckCircle, XCircle, AlertTriangle, 
+import {
+  Search, Filter, Eye, CheckCircle, XCircle, AlertTriangle,
   TrendingUp, Users, FileText, Clock, Edit, Save, X
 } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Use empty string so requests go through nginx proxy
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 const TestReview = () => {
   const [reviews, setReviews] = useState([]);
@@ -29,13 +30,15 @@ const TestReview = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/admin/test-reviews`, {
+      // Use proctoring/attempts endpoint which has review_status filtering capability
+      const response = await fetch(`${API_BASE_URL}/api/admin/proctoring/attempts`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
       const data = await response.json();
-      setReviews(data.reviews || []);
+      // proctoring/attempts returns {attempts: [...]}
+      setReviews(Array.isArray(data) ? data : (data.attempts || []));
     } catch (error) {
       console.error('Error fetching reviews:', error);
     } finally {
@@ -48,7 +51,7 @@ const TestReview = () => {
 
     // Search filter
     if (searchTerm) {
-      filtered = filtered.filter(r => 
+      filtered = filtered.filter(r =>
         r.user_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.user_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         r.cert_id?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -111,7 +114,7 @@ const TestReview = () => {
       }
 
       const response = await fetch(
-        `${API_BASE_URL}/api/admin/test-reviews/${selectedReview.attempt_id}/review`,
+        `${API_BASE_URL}/api/admin/proctoring/attempts/${selectedReview.attempt_id}/review`,
         {
           method: 'PUT',
           headers: {
@@ -265,11 +268,10 @@ const TestReview = () => {
                       </td>
                       <td className="px-6 py-4 text-slate-300">{review.pass_percentage || 70}%</td>
                       <td className="px-6 py-4">
-                        <span className={`font-semibold ${
-                          gap <= 2 ? 'text-yellow-400' :
-                          gap <= 5 ? 'text-orange-400' :
-                          'text-red-400'
-                        }`}>
+                        <span className={`font-semibold ${gap <= 2 ? 'text-yellow-400' :
+                            gap <= 5 ? 'text-orange-400' :
+                              'text-red-400'
+                          }`}>
                           -{gap.toFixed(1)}%
                         </span>
                       </td>
@@ -365,17 +367,17 @@ const StatusBadge = ({ status }) => {
 };
 
 // Review Modal Component
-const ReviewModal = ({ 
-  review, 
-  onClose, 
-  editingScore, 
-  setEditingScore, 
-  newScore, 
-  setNewScore, 
-  adminNotes, 
-  setAdminNotes, 
-  onDecision, 
-  submitting 
+const ReviewModal = ({
+  review,
+  onClose,
+  editingScore,
+  setEditingScore,
+  newScore,
+  setNewScore,
+  adminNotes,
+  setAdminNotes,
+  onDecision,
+  submitting
 }) => {
   const passPercentage = review.pass_percentage || review.settings?.pass_percentage || 70;
   const currentScore = review.score;
@@ -511,12 +513,10 @@ const ReviewModal = ({
 
           {/* Review Status (if already reviewed) */}
           {review.review_status !== 'pending' && (
-            <div className={`p-4 rounded-lg ${
-              review.review_status === 'approved' ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'
-            }`}>
-              <div className={`font-semibold mb-2 ${
-                review.review_status === 'approved' ? 'text-green-400' : 'text-red-400'
+            <div className={`p-4 rounded-lg ${review.review_status === 'approved' ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'
               }`}>
+              <div className={`font-semibold mb-2 ${review.review_status === 'approved' ? 'text-green-400' : 'text-red-400'
+                }`}>
                 {review.review_status === 'approved' ? 'Approved' : 'Rejected'} by {review.reviewed_by}
               </div>
               {review.reviewed_at && (

@@ -59,7 +59,8 @@ const Dashboard = () => {
     fetchDashboardData()
   }, [])
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  // Use relative URLs so requests go through nginx proxy (no CORS)
+  const API_BASE = ''
 
   const fetchDashboardData = async () => {
     try {
@@ -67,19 +68,19 @@ const Dashboard = () => {
 
       // Fetch multiple endpoints in parallel
       const [usersRes, certsRes, coursesRes, questionsRes, attemptsRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/admin/users/`, {
+        fetch(`${API_BASE}/api/admin/users/`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }),
-        fetch(`${API_BASE_URL}/api/admin/certifications/`, {
+        fetch(`${API_BASE}/api/admin/certifications/`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }),
-        fetch(`${API_BASE_URL}/api/admin/courses/`, {
+        fetch(`${API_BASE}/api/admin/courses/`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }),
-        fetch(`${API_BASE_URL}/api/admin/problems/`, {
+        fetch(`${API_BASE}/api/admin/problems/`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }),
-        fetch(`${API_BASE_URL}/api/admin/attempts/`, {
+        fetch(`${API_BASE}/api/admin/proctoring/attempts`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         })
       ])
@@ -89,7 +90,8 @@ const Dashboard = () => {
         certsRes.ok ? certsRes.json() : [],
         coursesRes.ok ? coursesRes.json() : [],
         questionsRes.ok ? questionsRes.json() : [],
-        attemptsRes.ok ? attemptsRes.json() : []
+        // proctoring/attempts returns {attempts: [...]} not an array directly
+        attemptsRes.ok ? attemptsRes.json().then(d => d?.attempts ?? []) : []
       ])
 
       const users = Array.isArray(usersDataRaw) ? usersDataRaw : []

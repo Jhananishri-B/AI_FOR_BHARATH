@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 class CertificationService {
   async getPublicSpecs() {
@@ -46,7 +46,7 @@ class CertificationService {
 
   async getTestSpec(certId, difficulty) {
     try {
-      const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8000';
+      const API_BASE_URL = import.meta.env?.VITE_API_URL || '';
       const response = await fetch(`${API_BASE_URL}/api/admin/cert-tests/specs/${certId}/${difficulty}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

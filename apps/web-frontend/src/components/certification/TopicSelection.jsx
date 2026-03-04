@@ -61,8 +61,8 @@ const TopicSelection = () => {
       setCertifications(mapped);
       const byId = {};
       const bySlug = {};
-      (coursesRes || []).forEach(c => { 
-        if (c?.id) byId[c.id] = c; 
+      (coursesRes || []).forEach(c => {
+        if (c?.id) byId[c.id] = c;
         if (c?.slug) bySlug[c.slug] = c;
       });
       setCoursesById(byId);
@@ -71,24 +71,15 @@ const TopicSelection = () => {
       const serverCompletion = dash?.courses_completion_status || {};
       const completedTopics = new Set(dash?.completed_topics || []);
       const completedModules = new Set(dash?.completed_modules || []);
-      console.log('=== TOPIC SELECTION DEBUG ===');
-      console.log('TopicSelection - Dashboard data:', dash);
-      console.log('TopicSelection - Server completion:', serverCompletion);
-      console.log('TopicSelection - Completed topics:', Array.from(completedTopics));
-      console.log('TopicSelection - Completed modules:', Array.from(completedModules));
-      
+
       const completedIds = new Set(dash?.completed_courses || []);
       const completedMap = {};
-      // Also consider enrolled_courses flags as completion source
       const enrolled = Array.isArray(dash?.enrolled_courses) ? dash.enrolled_courses : [];
       const enrolledCompletedIds = new Set(
         enrolled
           .filter(ec => ec && (ec.completed || ec.status === 'completed'))
           .map(ec => ec.course_id || ec.id)
       );
-      console.log('TopicSelection - Enrolled completed IDs:', Array.from(enrolledCompletedIds));
-
-  // Fallback: server-computed map (in case completed_courses isn't filled yet)
 
       (coursesRes || []).forEach(c => {
         const byId = completedIds.has(c.id);
@@ -96,11 +87,7 @@ const TopicSelection = () => {
         const byServer = serverCompletion[c.id] === true;
         completedMap[c.id] = Boolean(byId || byEnroll || byServer);
       });
-      
-      console.log('\n=== TopicSelection FINAL COMPLETED COURSE IDs ===', Array.from(completedIds));
-      console.log('=== TopicSelection COMPLETED MAP ===', completedMap);
-      console.log('=== END TOPIC SELECTION DEBUG ===\n');
-      
+
       setCompletedCourseIds(Array.from(completedIds));
       setCourseCompletedById(completedMap);
     } catch (error) {
@@ -173,12 +160,12 @@ const TopicSelection = () => {
                   if (bySlugCourse?.id) prereqKey = bySlugCourse.id;
                 }
                 const locked = prereqKey && !courseCompletedById[prereqKey];
-                const topic = TOPICS.find(t => t.name.toLowerCase().includes(cert.title.toLowerCase())) || 
-                             TOPICS.find(t => t.level.toLowerCase().includes(cert.title.toLowerCase())) ||
-                             { id: cert._id, name: cert.title, icon: Code2, color: 'from-blue-500 to-cyan-500', level: cert.difficulty };
+                const topic = TOPICS.find(t => t.name.toLowerCase().includes(cert.title.toLowerCase())) ||
+                  TOPICS.find(t => t.level.toLowerCase().includes(cert.title.toLowerCase())) ||
+                  { id: cert._id, name: cert.title, icon: Code2, color: 'from-blue-500 to-cyan-500', level: cert.difficulty };
                 const Icon = topic.icon;
                 const isSelected = selectedTopic?._id === cert._id;
-                
+
                 return (
                   <motion.div
                     key={cert._id}
@@ -187,11 +174,10 @@ const TopicSelection = () => {
                     transition={{ duration: 0.4, delay: index * 0.05 }}
                   >
                     <div
-                      className={`cursor-pointer rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] bg-slate-800/50 p-6 ${
-                        isSelected
+                      className={`cursor-pointer rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] bg-slate-800/50 p-6 ${isSelected
                           ? 'border-blue-500 shadow-lg shadow-blue-500/20'
                           : 'border-slate-700 hover:border-blue-400'
-                      } ${locked ? 'opacity-60 grayscale cursor-not-allowed' : ''}`}
+                        } ${locked ? 'opacity-60 grayscale cursor-not-allowed' : ''}`}
                       onClick={() => {
                         if (locked) {
                           const course = coursesById[cert.prerequisite_course_id];
@@ -261,8 +247,8 @@ const TopicSelection = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <button 
-              onClick={() => navigate('/certification')} 
+            <button
+              onClick={() => navigate('/certification')}
               className="w-full sm:w-auto border-2 border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all"
             >
               Back
@@ -270,11 +256,10 @@ const TopicSelection = () => {
             <button
               onClick={handleContinue}
               disabled={!selectedTopic || (selectedTopic.prerequisite_course_id && !courseCompletedById[selectedTopic.prerequisite_course_id])}
-              className={`w-full sm:w-auto flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                selectedTopic && !(selectedTopic.prerequisite_course_id && !courseCompletedById[selectedTopic.prerequisite_course_id])
+              className={`w-full sm:w-auto flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${selectedTopic && !(selectedTopic.prerequisite_course_id && !courseCompletedById[selectedTopic.prerequisite_course_id])
                   ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
                   : 'bg-slate-700 text-slate-500 cursor-not-allowed'
-              }`}
+                }`}
             >
               Start Test Now
               <ChevronRight className="h-5 w-5" />

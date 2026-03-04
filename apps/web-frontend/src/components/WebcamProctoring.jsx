@@ -17,7 +17,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
   const micStreamRef = useRef(null);
   const noiseCheckIntervalRef = useRef(null);
   const hasStartedRef = useRef(false);
-  
+
   const [isActive, setIsActive] = useState(false);
   const [hasViolation, setHasViolation] = useState(false);
   const [violations, setViolations] = useState([]);
@@ -37,7 +37,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
   const startWebcam = useCallback(async () => {
     try {
       console.log('🎥 Requesting webcam access...');
-      
+
       // Request camera access - permissions should already be granted from TestSetup
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -46,18 +46,18 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
           facingMode: 'user'
         }
       });
-      
+
       console.log('✅ Webcam stream obtained:', stream.getVideoTracks().length, 'video tracks');
-      
+
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         console.log('✅ Video element connected to stream');
-        
+
         // Set muted and autoplay attributes
         videoRef.current.muted = true;
         videoRef.current.playsInline = true;
-        
+
         // Wait for metadata to load
         videoRef.current.onloadedmetadata = async () => {
           try {
@@ -70,7 +70,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
             setIsActive(true);
           }
         };
-        
+
         // Fallback: set active after a short delay if metadata doesn't load
         setTimeout(() => {
           if (streamRef.current && !permissionDenied) {
@@ -79,13 +79,13 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
           }
         }, 1000);
       }
-      
+
       setPermissionDenied(false);
       setError(null);
       console.log('✅ Webcam setup complete');
     } catch (err) {
       console.error('❌ Error accessing webcam:', err.name, err.message);
-      
+
       // Don't show intrusive error if permissions not granted
       // User should have granted them in test setup page
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
@@ -120,12 +120,20 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
       }
     }
 
-    // Use the API base URL - default to localhost:8000 for development
-    const apiHost = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-    const wsProtocol = apiHost.startsWith('https') ? 'wss:' : 'ws:';
-    const wsHost = apiHost.replace(/^https?:\/\//, '');
-    const wsUrl = `${wsProtocol}//${wsHost}/api/proctoring/ws/${attemptId}`;
-    
+    // Use the API base URL — when empty (Docker prod), use current page's host so WS connects on the right port
+    const apiHost = import.meta.env.VITE_API_URL || '';
+    let wsUrl;
+    if (apiHost) {
+      // Explicit API URL set (dev): convert http(s):// to ws(s)://
+      const wsProtocol = apiHost.startsWith('https') ? 'wss:' : 'ws:';
+      const wsHost = apiHost.replace(/^https?:\/\//, '');
+      wsUrl = `${wsProtocol}//${wsHost}/api/proctoring/ws/${attemptId}`;
+    } else {
+      // Relative mode (Docker prod via nginx): use same host:port as the page
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      wsUrl = `${wsProtocol}//${window.location.host}/api/proctoring/ws/${attemptId}`;
+    }
+
     console.log('Connecting to proctoring WebSocket:', wsUrl);
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
@@ -138,10 +146,10 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
 
     ws.onmessage = async (event) => {
       const response = JSON.parse(event.data);
-      
+
       if (response.status === 'success' && response.data) {
         const data = response.data;
-        
+
         // Update stats
         setStats({
           yaw: data.yaw || 0,
@@ -150,16 +158,16 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
           phone_detected: data.phone_detected || false,
           multiple_people: data.multiple_people || false
         });
-        
+
         // Handle violations
         if (data.has_violations && data.violations && data.violations.length > 0) {
           setHasViolation(true);
           setViolations(prev => [...data.violations, ...prev].slice(0, 10)); // Keep last 10
-          
+
           // Log violations to certification attempt
           for (const violation of data.violations) {
             try {
-              const apiHost = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+              const apiHost = import.meta.env.VITE_API_URL || '';
               await fetch(`${apiHost}/api/certifications/proctoring-event`, {
                 method: 'POST',
                 headers: {
@@ -184,12 +192,12 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
               console.error('Failed to log violation to attempt:', err);
             }
           }
-          
+
           // Notify parent component
           if (onViolation) {
             onViolation(data.violations);
           }
-          
+
           // Clear violation flag after 3 seconds
           setTimeout(() => {
             setHasViolation(false);
@@ -207,7 +215,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
 
     ws.onclose = (event) => {
       console.log('Proctoring WebSocket closed', event.code, event.reason);
-      
+
       // Don't set isActive to false - camera should stay on even if WS connection drops
       // Attempt to reconnect after 3 seconds if not a clean close
       if (event.code !== 1000 && wsRef.current === ws) {
@@ -228,45 +236,45 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
   const startAudioMonitoring = useCallback(async () => {
     try {
       // Get microphone access (should already be granted from test setup)
-      const micStream = await navigator.mediaDevices.getUserMedia({ 
-        audio: { 
+      const micStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
           echoCancellation: false,
           noiseSuppression: false,
           autoGainControl: false
-        } 
+        }
       });
       micStreamRef.current = micStream;
       console.log('✅ Microphone started successfully using pre-granted permissions');
-      
+
       // Create audio context and analyser
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       audioContextRef.current = audioContext;
-      
+
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 2048;
       analyserRef.current = analyser;
-      
+
       const microphone = audioContext.createMediaStreamSource(micStream);
       microphone.connect(analyser);
-      
+
       // Monitor noise levels
       const dataArray = new Uint8Array(analyser.frequencyBinCount);
       const NOISE_THRESHOLD = 40; // Adjust threshold (0-255) - set to 30 to reduce false positives
       const CHECK_INTERVAL = 100; // Check every 100ms
-      
+
       noiseCheckIntervalRef.current = setInterval(async () => {
         analyser.getByteFrequencyData(dataArray);
-        
+
         // Calculate average volume
         const sum = dataArray.reduce((acc, val) => acc + val, 0);
         const average = sum / dataArray.length;
-        
+
         setNoiseLevel(Math.round(average));
-        
+
         // Check if noise exceeds threshold
         if (average > NOISE_THRESHOLD) {
           setIsLoudNoise(true);
-          
+
           // Send noise violation via WebSocket
           if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify({
@@ -276,10 +284,10 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
               timestamp: Date.now()
             }));
           }
-          
+
           // Log noise violation to certification attempt
           try {
-            const apiHost = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const apiHost = import.meta.env.VITE_API_URL || '';
             await fetch(`${apiHost}/api/certifications/proctoring-event`, {
               method: 'POST',
               headers: {
@@ -299,14 +307,14 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
           } catch (err) {
             console.error('Failed to log noise violation to attempt:', err);
           }
-          
+
           // Clear loud noise flag after 2 seconds
           setTimeout(() => {
             setIsLoudNoise(false);
           }, 2000);
         }
       }, CHECK_INTERVAL);
-      
+
       console.log('Audio monitoring started');
     } catch (err) {
       console.error('Error accessing microphone:', err);
@@ -320,17 +328,17 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
       clearInterval(noiseCheckIntervalRef.current);
       noiseCheckIntervalRef.current = null;
     }
-    
+
     if (micStreamRef.current) {
       micStreamRef.current.getTracks().forEach(track => track.stop());
       micStreamRef.current = null;
     }
-    
+
     if (audioContextRef.current) {
       audioContextRef.current.close();
       audioContextRef.current = null;
     }
-    
+
     analyserRef.current = null;
     setNoiseLevel(0);
     setIsLoudNoise(false);
@@ -388,7 +396,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
     await startWebcam();
     connectWebSocket();
     startAudioMonitoring();
-    
+
     // Send frames every 250ms (4 FPS) for quicker detection and response
     intervalRef.current = setInterval(sendFrame, 250);
   };
@@ -401,7 +409,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    
+
     // Close WebSocket
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       try {
@@ -412,7 +420,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
       }
       wsRef.current = null;
     }
-    
+
     // Stop webcam and audio
     stopWebcam();
     stopAudioMonitoring();
@@ -423,12 +431,12 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
   useEffect(() => {
     if (!hasStartedRef.current) {
       hasStartedRef.current = true;
-      
+
       // Start immediately since permissions are pre-granted
       console.log('🎥 Starting proctoring with pre-granted permissions...');
       startProctoring();
     }
-    
+
     return () => {
       if (hasStartedRef.current) {
         console.log('🛑 Cleaning up proctoring...');
@@ -441,12 +449,12 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
   useEffect(() => {
     const handleFullscreenChange = () => {
       console.log('🔄 Fullscreen change detected');
-      
+
       // Only intervene if camera is actually broken after a delay
       setTimeout(() => {
         const video = videoRef.current;
         const stream = streamRef.current;
-        
+
         // Only restart if stream is truly dead (not just paused)
         if (stream && video) {
           const videoTracks = stream.getVideoTracks();
@@ -498,10 +506,10 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
             muted
             className="w-full h-48 object-cover"
           />
-          
+
           {/* Hidden canvas for frame capture */}
           <canvas ref={canvasRef} className="hidden" />
-          
+
           {/* Compact Status Badge */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             <div className="flex items-center gap-1.5 bg-black/80 px-2 py-1 rounded">
@@ -510,15 +518,14 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
                 {isActive ? 'Active' : 'Inactive'}
               </span>
             </div>
-            
+
             {/* Microphone Status & Noise Level */}
             {isActive && (
-              <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${
-                isLoudNoise ? 'bg-red-600 animate-pulse' : 'bg-black/80'
-              }`}>
+              <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${isLoudNoise ? 'bg-red-600 animate-pulse' : 'bg-black/80'
+                }`}>
                 <svg className={`w-3 h-3 ${isLoudNoise ? 'text-white' : 'text-green-500'}`} fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                 </svg>
                 <div className="flex items-center gap-0.5">
                   <div className={`w-1 h-2 rounded-sm ${noiseLevel > 5 ? 'bg-green-400' : 'bg-gray-600'}`}></div>
@@ -530,7 +537,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
               </div>
             )}
           </div>
-          
+
           {/* Violation Alert - Compact */}
           {hasViolation && (
             <div className="absolute top-2 right-2">
@@ -540,7 +547,7 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
               </div>
             </div>
           )}
-          
+
           {/* Head Pose Stats - Compact */}
           {isActive && (
             <div className="absolute bottom-2 left-2 bg-black/80 px-2 py-1 rounded text-white text-[10px]">
@@ -574,21 +581,21 @@ const WebcamProctoring = ({ attemptId, onViolation }) => {
               <span className="text-yellow-200 text-xs">Looking away</span>
             </div>
           )}
-          
+
           {stats.phone_detected && (
             <div className="flex items-center gap-1 p-1.5 bg-red-900/90 border border-red-600 rounded">
               <AlertTriangle className="w-3 h-3 text-red-400 flex-shrink-0" />
               <span className="text-red-200 text-xs font-medium">Phone detected</span>
             </div>
           )}
-          
+
           {stats.multiple_people && (
             <div className="flex items-center gap-1 p-1.5 bg-red-900/90 border border-red-600 rounded">
               <AlertTriangle className="w-3 h-3 text-red-400 flex-shrink-0" />
               <span className="text-red-200 text-xs font-medium">Multiple people</span>
             </div>
           )}
-          
+
           {isLoudNoise && (
             <div className="flex items-center gap-1 p-1.5 bg-orange-900/90 border border-orange-600 rounded animate-pulse">
               <AlertTriangle className="w-3 h-3 text-orange-400 flex-shrink-0" />
