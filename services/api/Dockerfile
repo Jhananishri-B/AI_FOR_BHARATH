@@ -35,7 +35,7 @@ COPY services/api/src ./src
 COPY scripts ./scripts
 
 # Copy certificate template
-COPY certificate_template_default.html ./certificate_template_default.html
+COPY templates/html/certificate_template_default.html ./certificate_template_default.html
 
 # Create directory for generated certificates
 RUN mkdir -p /app/certificates

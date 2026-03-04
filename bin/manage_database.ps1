@@ -1,4 +1,10 @@
 # LearnQuest Database Management Script
+if (Test-Path "bin") {
+    # Already in root
+} elseif (Test-Path "..\bin") {
+    Set-Location ..
+}
+
 Write-Host "LearnQuest Database Management Script" -ForegroundColor Cyan
 Write-Host "====================================" -ForegroundColor Cyan
 Write-Host ""
@@ -16,17 +22,17 @@ $choice = Read-Host "Enter your choice (1-6)"
 switch ($choice) {
     "1" {
         Write-Host "Exporting database..." -ForegroundColor Yellow
-        python scripts/export_database.py
+        python scripts/database/export_database.py
         Read-Host "Press Enter to continue"
     }
     "2" {
         Write-Host "Importing database..." -ForegroundColor Yellow
-        python scripts/import_database.py
+        python scripts/database/import_database.py
         Read-Host "Press Enter to continue"
     }
     "3" {
         Write-Host "Syncing database..." -ForegroundColor Yellow
-        python scripts/sync_database.py
+        python scripts/database/sync_database.py
         Read-Host "Press Enter to continue"
     }
     "4" {

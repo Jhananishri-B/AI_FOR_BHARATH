@@ -128,7 +128,7 @@ services:
       - ./services/api/src:/app/services/api/src
     working_dir: /app
     command: >
-      sh -c "pip install pymongo passlib[bcrypt] python-jose[cryptography] && python /app/scripts/seed_db.py"
+      sh -c "pip install pymongo passlib[bcrypt] python-jose[cryptography] && python /app/scripts/database/seed_db.py"
     depends_on:
       - db
     restart: "no"
@@ -161,7 +161,7 @@ services:
       - ./scripts:/app/scripts
     working_dir: /app
     command: >
-      sh -c "sleep 30 && pip install chromadb && python /app/scripts/init_chroma.py"
+      sh -c "sleep 30 && pip install chromadb && python /app/scripts/setup/init_chroma.py"
     depends_on:
       - chroma
     restart: "no"

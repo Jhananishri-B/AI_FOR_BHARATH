@@ -1,5 +1,9 @@
 # LearnQuest Team Setup Script (PowerShell)
-# This script helps teammates set up the project quickly and correctly.
+if (Test-Path "bin") {
+    # Already in root
+} elseif (Test-Path "..\bin") {
+    Set-Location ..
+}
 
 Write-Host "🚀 LearnQuest Team Setup Script" -ForegroundColor Green
 Write-Host "This script will help you set up the project correctly." -ForegroundColor Yellow

@@ -1,4 +1,10 @@
 @echo off
+if exist "bin" (
+    rem Already in root
+) else if exist "..\bin" (
+    cd ..
+)
+
 echo LearnQuest Database Management Script
 echo ====================================
 echo.
@@ -14,15 +20,15 @@ set /p choice="Enter your choice (1-6): "
 
 if "%choice%"=="1" (
     echo Exporting database...
-    python scripts/export_database.py
+    python scripts/database/export_database.py
     pause
 ) else if "%choice%"=="2" (
     echo Importing database...
-    python scripts/import_database.py
+    python scripts/database/import_database.py
     pause
 ) else if "%choice%"=="3" (
     echo Syncing database...
-    python scripts/sync_database.py
+    python scripts/database/sync_database.py
     pause
 ) else if "%choice%"=="4" (
     echo Starting services...

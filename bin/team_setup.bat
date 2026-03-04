@@ -1,4 +1,10 @@
 @echo off
+if exist "bin" (
+    rem Already in root
+) else if exist "..\bin" (
+    cd ..
+)
+
 echo 🚀 LearnQuest Team Setup Script
 echo This script will help you set up the project correctly.
 echo.

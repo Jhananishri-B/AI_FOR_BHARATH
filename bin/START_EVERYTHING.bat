@@ -1,4 +1,10 @@
 @echo off
+if exist "bin" (
+    rem Already in root
+) else if exist "..\bin" (
+    cd ..
+)
+
 echo ======================================
 echo LearnQuest Startup Script
 echo ======================================
