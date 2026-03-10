@@ -16,6 +16,7 @@ import httpx
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel
+from src.bedrock_client import bedrock_service
 import chromadb
 from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
@@ -142,39 +143,19 @@ async def explain_concept(
 async def handle_general_knowledge_query(question: str) -> ExplainResponse:
     """Handle general knowledge queries when no course content is available"""
     try:
-        # Use Ollama directly for general knowledge
-        ollama_url = f"{OLLAMA_BASE_URL}/api/generate"
+        # Use Bedrock Llama 3 directly for general knowledge
+        system_prompt = "You are an AI tutor. Please provide a clear, educational explanation for the following question. Provide: 1. A clear explanation 2. Key concepts 3. Examples if applicable 4. Related topics. Keep your response educational and helpful."
         
-        prompt = f"""You are an AI tutor. Please provide a clear, educational explanation for the following question:
-
-Question: {question}
-
-Please provide:
-1. A clear explanation
-2. Key concepts
-3. Examples if applicable
-4. Related topics
-
-Keep your response educational and helpful."""
-
-        async with httpx.AsyncClient() as client:
-            response = await client.post(ollama_url, json={
-                "model": "llama3:latest",
-                "prompt": prompt,
-                "stream": False
-            })
-            
-            if response.status_code == 200:
-                result = response.json()
-                explanation = result.get("response", "I'm sorry, I couldn't generate an explanation.")
+        explanation = bedrock_service.generate_text(
+            prompt=f"Question: {question}", 
+            system_prompt=system_prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
+        )
                 
-                return ExplainResponse(
-                    explanation=explanation,
-                    sources=[],
-                    confidence=0.8
-                )
-            else:
-                raise Exception(f"Ollama API error: {response.status_code}")
+        return ExplainResponse(
+            response=explanation,
+            sources=[]
+        )
                 
     except Exception as e:
         print(f"General knowledge query error: {str(e)}")
@@ -203,22 +184,11 @@ Instructions:
 
 Your Response:"""
 
-        # Call Ollama Llama3 API
-        payload = {
-            "model": "llama3",
-            "prompt": prompt,
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/generate",
-            json=payload,
-            timeout=60
+        # Call Bedrock Llama3 API
+        ai_response = bedrock_service.generate_text(
+            prompt=prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
         )
-        response.raise_for_status()
-        
-        result = response.json()
-        ai_response = result.get("response", "I'm sorry, I couldn't generate a response.")
         
         return ExplainResponse(
             response=ai_response,
@@ -264,23 +234,12 @@ Instructions:
 
 Your Response:"""
 
-        # Call Ollama LLaVA API
-        payload = {
-            "model": "llava",
-            "prompt": prompt,
-            "images": [image_base64],
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/generate",
-            json=payload,
-            timeout=90
+        # Call Bedrock Claude 3 Haiku for lightning fast vision
+        ai_response = bedrock_service.generate_with_image(
+            prompt=prompt,
+            image_base64=image_base64,
+            model_id="anthropic.claude-3-haiku-20240307-v1:0"
         )
-        response.raise_for_status()
-        
-        result = response.json()
-        ai_response = result.get("response", "I'm sorry, I couldn't analyze the image.")
         
         return ExplainResponse(
             response=ai_response,
@@ -323,22 +282,13 @@ async def ai_health_check():
         except Exception as e:
             chroma_status["error"] = str(e)
         
-        # Check Ollama connection
-        ollama_status = {"connected": False, "available_models": []}
-        try:
-            ollama_response = requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=5)
-            ollama_models = ollama_response.json().get("models", [])
-            ollama_status = {
-                "connected": True, 
-                "available_models": [model.get("name") for model in ollama_models]
-            }
-        except Exception as e:
-            ollama_status["error"] = str(e)
+        # Bedrock doesn't need a ping, it's serverless AWS
+        bedrock_status = {"connected": True, "available_models": ["meta.llama3-8b-instruct-v1:0", "anthropic.claude-3-haiku-20240307-v1:0"]}
         
         return {
             "status": "healthy" if chroma_status["connected"] else "degraded",
             "chromadb": chroma_status,
-            "ollama": ollama_status
+            "bedrock": bedrock_status
         }
     except Exception as e:
         return {
@@ -410,7 +360,7 @@ async def ai_coach(
         try:
             async with httpx.AsyncClient(timeout=5) as client:
                 gnn_resp = await client.post(
-                    "http://api:8000/api/gnn/recommend",
+                    "http://localhost:8000/api/gnn/recommend",
                     json={
                         "user_id": current_user.id,
                         "failed_problem_ids": recent_wrong_ids,
@@ -441,32 +391,17 @@ GNN has recommended these problem ids (if any) to help improve: {gnn_recs.get('r
 
 Use this information to have a personalized and motivational conversation. Be encouraging, ask about their learning goals, celebrate their progress, and suggest next steps. Keep responses conversational and friendly."""
 
-        # Prepare messages for Ollama
-        messages = [{"role": "system", "content": system_prompt}]
-        
-        # Add chat history
+        # Prepare messages
+        messages_text = ""
         for msg in request.messages:
-            messages.append({
-                "role": msg.role,
-                "content": msg.content
-            })
+            messages_text += f"{msg.role.capitalize()}: {msg.content}\n"
         
-        # Call Ollama with llama3
-        payload = {
-            "model": "llama3",
-            "messages": messages,
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/chat",
-            json=payload,
-            timeout=60
+        # Call Bedrock Llama 3
+        ai_response = bedrock_service.generate_text(
+            prompt=messages_text,
+            system_prompt=system_prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
         )
-        response.raise_for_status()
-        result = response.json()
-        
-        ai_response = result.get("message", {}).get("content", "I'm here to help you on your learning journey!")
         
         return CoachResponse(response=ai_response, recommendations={
             "weaker_topics": [{"topic_id": k, "mistakes": v, "name": topic_names.get(k, k)} for k, v in sorted(topic_counts.items(), key=lambda x: x[1], reverse=True)],
@@ -582,22 +517,11 @@ Return ONLY a JSON object with this exact format:
 
 Do not include any other text or formatting."""
 
-        # Call Ollama for AI message
-        payload = {
-            "model": "llama3",
-            "prompt": prompt,
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/generate",
-            json=payload,
-            timeout=30
+        # Call Bedrock Llama 3 for AI message
+        ai_response = bedrock_service.generate_text(
+            prompt=prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
         )
-        response.raise_for_status()
-        
-        result = response.json()
-        ai_response = result.get("response", "Great job on completing the quiz! Let's practice some problems to strengthen your skills.")
         
         # Try to parse JSON from AI response
         try:

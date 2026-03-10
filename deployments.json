@@ -1,0 +1,54 @@
+[
+    {
+        "id": "ecs-svc/5373464147443409809",
+        "status": "PRIMARY",
+        "taskDefinition": "arn:aws:ecs:ap-south-1:244271316596:task-definition/learnquest-api:2",
+        "desiredCount": 0,
+        "pendingCount": 0,
+        "runningCount": 0,
+        "failedTasks": 0,
+        "createdAt": "2026-03-08T19:03:00.273000+05:30",
+        "updatedAt": "2026-03-08T19:03:21.163000+05:30",
+        "launchType": "FARGATE",
+        "platformVersion": "1.4.0",
+        "platformFamily": "Linux",
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-023a023bd2e69223d",
+                    "subnet-037428401d7bd1a63"
+                ],
+                "securityGroups": [],
+                "assignPublicIp": "ENABLED"
+            }
+        },
+        "rolloutState": "IN_PROGRESS",
+        "rolloutStateReason": "ECS deployment ecs-svc/5373464147443409809 in progress."
+    },
+    {
+        "id": "ecs-svc/8190347612598507849",
+        "status": "ACTIVE",
+        "taskDefinition": "arn:aws:ecs:ap-south-1:244271316596:task-definition/learnquest-api:1",
+        "desiredCount": 1,
+        "pendingCount": 0,
+        "runningCount": 1,
+        "failedTasks": 0,
+        "createdAt": "2026-03-08T18:51:03.432000+05:30",
+        "updatedAt": "2026-03-08T19:03:21.122000+05:30",
+        "launchType": "FARGATE",
+        "platformVersion": "1.4.0",
+        "platformFamily": "Linux",
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-023a023bd2e69223d",
+                    "subnet-037428401d7bd1a63"
+                ],
+                "securityGroups": [],
+                "assignPublicIp": "ENABLED"
+            }
+        },
+        "rolloutState": "COMPLETED",
+        "rolloutStateReason": "ECS deployment ecs-svc/8190347612598507849 completed."
+    }
+]

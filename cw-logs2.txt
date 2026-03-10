@@ -1,0 +1,36 @@
+{
+    "events": [
+        {
+            "timestamp": 1772976257741,
+            "message": "INFO:     Will watch for changes in these directories: ['/app']",
+            "ingestionTime": 1772976262295
+        },
+        {
+            "timestamp": 1772976257741,
+            "message": "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)",
+            "ingestionTime": 1772976262295
+        },
+        {
+            "timestamp": 1772976257741,
+            "message": "INFO:     Started reloader process [1] using WatchFiles",
+            "ingestionTime": 1772976262295
+        },
+        {
+            "timestamp": 1772976271509,
+            "message": "INFO:     Started server process [8]",
+            "ingestionTime": 1772976272263
+        },
+        {
+            "timestamp": 1772976271509,
+            "message": "INFO:     Waiting for application startup.",
+            "ingestionTime": 1772976272263
+        },
+        {
+            "timestamp": 1772976271509,
+            "message": "INFO:     Application startup complete.",
+            "ingestionTime": 1772976272263
+        }
+    ],
+    "nextForwardToken": "f/39538692073963058204981786968491510284671103200511655938/s",
+    "nextBackwardToken": "b/39538691766926398311612167543777134591819518758322765824/s"
+}

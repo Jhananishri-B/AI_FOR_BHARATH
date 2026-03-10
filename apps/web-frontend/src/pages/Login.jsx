@@ -44,7 +44,9 @@ const Login = () => {
   // 2. Already authenticated — redirect to the right place
   if (isAuthenticated) {
     if (user?.email === 'admin@learnquest.com') {
-      window.location.replace('/admin/dashboard');
+      const token = localStorage.getItem('token');
+      const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://localhost:5174';
+      window.location.replace(`${adminUrl}/dashboard?token=${token}`);
       return null;
     }
     return <Navigate to="/dashboard" replace />;
@@ -63,8 +65,9 @@ const Login = () => {
       if (userEmail === 'admin@learnquest.com') {
         // Admin: store token hint, then do a full-page redirect to the separate admin SPA
         localStorage.setItem('admin_user', JSON.stringify(result.user));
-        // Use window.location.href so the entire page reloads and nginx serves the admin SPA
-        window.location.href = '/admin/dashboard';
+        // Pass token hint in URL across S3 buckets
+        const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://localhost:5174';
+        window.location.href = `${adminUrl}/dashboard?token=${result.token || localStorage.getItem('token')}`;
         return; // stop here — no further state updates needed
       } else {
         navigate('/dashboard');

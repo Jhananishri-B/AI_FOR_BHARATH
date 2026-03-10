@@ -1,0 +1,6 @@
+[
+    {
+        "GroupId": "sg-06a5532bb4dcd29a5",
+        "GroupName": "default"
+    }
+]

@@ -1,0 +1,94 @@
+{
+    "tasks": [
+        {
+            "attachments": [
+                {
+                    "id": "ebbc0be0-d21f-4b8a-95b5-f1606e23d427",
+                    "type": "ElasticNetworkInterface",
+                    "status": "ATTACHED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-023a023bd2e69223d"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-038fc73ba6633700c"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "02:21:62:86:15:b7"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-172-31-32-207.ap-south-1.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "172.31.32.207"
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "ecs.cpu-architecture",
+                    "value": "x86_64"
+                }
+            ],
+            "availabilityZone": "ap-south-1a",
+            "clusterArn": "arn:aws:ecs:ap-south-1:244271316596:cluster/learnquest-cluster",
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:ap-south-1:244271316596:container/learnquest-cluster/2d2a6664d9f14da294af53b7450f121b/f73a6fc5-85b5-4d1e-aaad-1126b0ec3806",
+                    "taskArn": "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/2d2a6664d9f14da294af53b7450f121b",
+                    "name": "api",
+                    "image": "244271316596.dkr.ecr.ap-south-1.amazonaws.com/learnquest/api:latest",
+                    "imageDigest": "sha256:96aef6728d32d16344452c9f15b52f4a0fee66bf44bc84b3aedf64259e9548d3",
+                    "runtimeId": "2d2a6664d9f14da294af53b7450f121b-0946514567",
+                    "lastStatus": "PENDING",
+                    "networkBindings": [],
+                    "networkInterfaces": [
+                        {
+                            "attachmentId": "ebbc0be0-d21f-4b8a-95b5-f1606e23d427",
+                            "privateIpv4Address": "172.31.32.207"
+                        }
+                    ],
+                    "healthStatus": "UNKNOWN",
+                    "cpu": "0"
+                }
+            ],
+            "cpu": "1024",
+            "createdAt": "2026-03-08T19:03:30.962000+05:30",
+            "desiredStatus": "RUNNING",
+            "enableExecuteCommand": false,
+            "group": "service:learnquest-api",
+            "healthStatus": "UNKNOWN",
+            "lastStatus": "PENDING",
+            "launchType": "FARGATE",
+            "memory": "2048",
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "api"
+                    }
+                ],
+                "inferenceAcceleratorOverrides": []
+            },
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "startedBy": "ecs-svc/5373464147443409809",
+            "tags": [],
+            "taskArn": "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/2d2a6664d9f14da294af53b7450f121b",
+            "taskDefinitionArn": "arn:aws:ecs:ap-south-1:244271316596:task-definition/learnquest-api:2",
+            "version": 3,
+            "ephemeralStorage": {
+                "sizeInGiB": 20
+            },
+            "fargateEphemeralStorage": {
+                "sizeInGiB": 20
+            }
+        }
+    ],
+    "failures": []
+}

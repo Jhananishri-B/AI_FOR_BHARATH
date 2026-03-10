@@ -1,0 +1,7 @@
+ M apps/admin-frontend/src/App.jsx
+ M apps/admin-frontend/src/components/Layout.jsx
+ M apps/web-frontend/src/App.jsx
+ M apps/web-frontend/src/pages/Login.jsx
+ M services/api/src/services/google_auth.py
+?? git_diff.txt
+?? status.txt

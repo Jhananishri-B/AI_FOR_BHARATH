@@ -1,0 +1,86 @@
+{
+    "family": "learnquest-api",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "executionRoleArn": "arn:aws:iam::244271316596:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::244271316596:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "api",
+            "image": "244271316596.dkr.ecr.ap-south-1.amazonaws.com/learnquest/api:latest",
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "protocol": "tcp"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "MONGO_DB",
+                    "value": "learnquest"
+                },
+                {
+                    "name": "AWS_REGION",
+                    "value": "ap-south-1"
+                },
+                {
+                    "name": "MONGO_URL",
+                    "value": "<YOUR_MONGO_URL>"
+                },
+                {
+                    "name": "JWT_SECRET_KEY",
+                    "value": "your-secret-key-change-in-production"
+                },
+                {
+                    "name": "GOOGLE_CLIENT_ID",
+                    "value": "<YOUR_GOOGLE_CLIENT_ID>"
+                },
+                {
+                    "name": "GOOGLE_CLIENT_SECRET",
+                    "value": "<YOUR_GOOGLE_CLIENT_SECRET>"
+                },
+                {
+                    "name": "GOOGLE_REDIRECT_URI",
+                    "value": "http://learnquest-web-frontend-2442713165.s3-website.ap-south-1.amazonaws.com/login"
+                },
+                {
+                    "name": "SMTP_HOST",
+                    "value": "smtp.gmail.com"
+                },
+                {
+                    "name": "SMTP_PORT",
+                    "value": "587"
+                },
+                {
+                    "name": "SMTP_USER",
+                    "value": "learnquest04@gmail.com"
+                },
+                {
+                    "name": "SMTP_PASSWORD",
+                    "value": "<YOUR_SMTP_PASSWORD>"
+                },
+                {
+                    "name": "SMTP_FROM_EMAIL",
+                    "value": "learnquest04@gmail.com"
+                },
+                {
+                    "name": "SMTP_FROM_NAME",
+                    "value": "LearnQuest Certifications"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/learnquest-api",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-stream-prefix": "api",
+                    "awslogs-create-group": "true"
+                }
+            }
+        }
+    ]
+}

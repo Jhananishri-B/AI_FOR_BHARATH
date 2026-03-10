@@ -21,8 +21,9 @@ const Layout = ({ children }) => {
     localStorage.removeItem('admin_user')
     localStorage.removeItem('user') // Also clear the generic user object if present
     localStorage.clear() // Nuke everything to be absolutely safe
-    // Full page redirect to web login — clears React SPA state completely
-    window.location.href = '/login'
+    // Redirect to web login — use environment variable if available, otherwise relative path
+    const loginUrl = import.meta.env.VITE_WEB_URL ? `${import.meta.env.VITE_WEB_URL}/login` : '/login'
+    window.location.href = loginUrl
   }
 
   return (

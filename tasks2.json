@@ -1,0 +1,6 @@
+{
+    "taskArns": [
+        "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/2d2a6664d9f14da294af53b7450f121b",
+        "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/455609db9e20490baf7a38b37e851901"
+    ]
+}

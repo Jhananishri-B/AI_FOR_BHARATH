@@ -1,0 +1,99 @@
+{
+    "tasks": [
+        {
+            "attachments": [
+                {
+                    "id": "54bccf59-7c24-454f-a02f-fb082aee69fd",
+                    "type": "ElasticNetworkInterface",
+                    "status": "ATTACHED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-037428401d7bd1a63"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-09844596b0802fd02"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "0a:ba:5a:79:da:7b"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-172-31-7-90.ap-south-1.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "172.31.7.90"
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "ecs.cpu-architecture",
+                    "value": "x86_64"
+                }
+            ],
+            "availabilityZone": "ap-south-1b",
+            "clusterArn": "arn:aws:ecs:ap-south-1:244271316596:cluster/learnquest-cluster",
+            "connectivity": "CONNECTED",
+            "connectivityAt": "2026-03-08T18:51:37.315000+05:30",
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:ap-south-1:244271316596:container/learnquest-cluster/455609db9e20490baf7a38b37e851901/7c7b6050-b6ee-4164-94cc-62bf74bc2c54",
+                    "taskArn": "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/455609db9e20490baf7a38b37e851901",
+                    "name": "api",
+                    "image": "244271316596.dkr.ecr.ap-south-1.amazonaws.com/learnquest/api:latest",
+                    "imageDigest": "sha256:96aef6728d32d16344452c9f15b52f4a0fee66bf44bc84b3aedf64259e9548d3",
+                    "runtimeId": "455609db9e20490baf7a38b37e851901-0946514567",
+                    "lastStatus": "RUNNING",
+                    "networkBindings": [],
+                    "networkInterfaces": [
+                        {
+                            "attachmentId": "54bccf59-7c24-454f-a02f-fb082aee69fd",
+                            "privateIpv4Address": "172.31.7.90"
+                        }
+                    ],
+                    "healthStatus": "UNKNOWN",
+                    "cpu": "0"
+                }
+            ],
+            "cpu": "1024",
+            "createdAt": "2026-03-08T18:51:33.391000+05:30",
+            "desiredStatus": "RUNNING",
+            "enableExecuteCommand": false,
+            "group": "service:learnquest-api",
+            "healthStatus": "UNKNOWN",
+            "lastStatus": "RUNNING",
+            "launchType": "FARGATE",
+            "memory": "2048",
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "api"
+                    }
+                ],
+                "inferenceAcceleratorOverrides": []
+            },
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "pullStartedAt": "2026-03-08T18:51:43.373000+05:30",
+            "pullStoppedAt": "2026-03-08T18:54:15.431000+05:30",
+            "startedAt": "2026-03-08T18:54:17.423000+05:30",
+            "startedBy": "ecs-svc/8190347612598507849",
+            "tags": [],
+            "taskArn": "arn:aws:ecs:ap-south-1:244271316596:task/learnquest-cluster/455609db9e20490baf7a38b37e851901",
+            "taskDefinitionArn": "arn:aws:ecs:ap-south-1:244271316596:task-definition/learnquest-api:1",
+            "version": 4,
+            "ephemeralStorage": {
+                "sizeInGiB": 20
+            },
+            "fargateEphemeralStorage": {
+                "sizeInGiB": 20
+            }
+        }
+    ],
+    "failures": []
+}

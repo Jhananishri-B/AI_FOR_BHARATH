@@ -1,32 +1,43 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout';
-import Login from './pages/Login';
-import Courses from './pages/Courses';
-import CourseDetail from './pages/CourseDetail';
-import ModuleHubPage from './pages/ModuleHubPage';
-import Quiz from './pages/Quiz';
-import QuizResults from './pages/QuizResults';
-import Dashboard from './pages/Dashboard';
-import Tutor from './pages/Tutor';
-import CoachPage from './pages/CoachPage';
-import EnhancedCoachPage from './pages/EnhancedCoachPage';
-import Lesson from './pages/Lesson';
-import PracticePage from './pages/PracticePage';
-import ProblemSolverPage from './pages/ProblemSolverPage';
-import Leaderboard from './pages/Leaderboard';
-// Certification pages - using components from /components/certification
-import { CertificationLanding } from './components/certification/CertificationLanding';
-import { TopicSelection } from './components/certification/TopicSelection';
-import { DifficultySelection } from './components/certification/DifficultySelection';
-import { TestSetup } from './components/certification/TestSetup';
-import { TestResults } from './components/certification/TestResults';
-import CodingTestInterface from './pages/CodingTestInterface';
-import CodingTestResults from './pages/CodingTestResults';
 import { Toaster } from 'sonner';
 import './App.css';
+
+// ── Lazy-loaded pages (code-split into separate chunks) ──────────────────────
+const Login = React.lazy(() => import('./pages/Login'));
+const Courses = React.lazy(() => import('./pages/Courses'));
+const CourseDetail = React.lazy(() => import('./pages/CourseDetail'));
+const ModuleHubPage = React.lazy(() => import('./pages/ModuleHubPage'));
+const Quiz = React.lazy(() => import('./pages/Quiz'));
+const QuizResults = React.lazy(() => import('./pages/QuizResults'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const Tutor = React.lazy(() => import('./pages/Tutor'));
+const EnhancedCoachPage = React.lazy(() => import('./pages/EnhancedCoachPage'));
+const Lesson = React.lazy(() => import('./pages/Lesson'));
+const PracticePage = React.lazy(() => import('./pages/PracticePage'));
+const ProblemSolverPage = React.lazy(() => import('./pages/ProblemSolverPage'));
+const Leaderboard = React.lazy(() => import('./pages/Leaderboard'));
+const CodingTestInterface = React.lazy(() => import('./pages/CodingTestInterface'));
+const CodingTestResults = React.lazy(() => import('./pages/CodingTestResults'));
+
+// Certification components (lazy)
+const CertificationLanding = React.lazy(() => import('./components/certification/CertificationLanding').then(m => ({ default: m.CertificationLanding })));
+const TopicSelection = React.lazy(() => import('./components/certification/TopicSelection').then(m => ({ default: m.TopicSelection })));
+const DifficultySelection = React.lazy(() => import('./components/certification/DifficultySelection').then(m => ({ default: m.DifficultySelection })));
+const TestSetup = React.lazy(() => import('./components/certification/TestSetup').then(m => ({ default: m.TestSetup })));
+const TestResults = React.lazy(() => import('./components/certification/TestResults').then(m => ({ default: m.TestResults })));
+
+// Loading fallback for Suspense boundaries
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen bg-slate-900">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+      <p className="text-slate-400 text-sm">Loading...</p>
+    </div>
+  </div>
+);
 
 /**
  * Smart root redirect:
@@ -59,12 +70,26 @@ const RootRedirect = () => {
   } catch (e) { }
 
   if (user?.email === 'admin@learnquest.com' || isStoredAdmin) {
-    // Admin panel is a separate compiled React app at /admin — needs full page reload
-    window.location.replace('/admin/dashboard');
+    // Admin panel is on a separate domain/S3 bucket
+    const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://localhost:5174';
+    // Pass the token in the URL so the Admin SPA can pick it up (cross-domain auth hint)
+    const token = localStorage.getItem('token');
+    window.location.replace(`${adminUrl}/dashboard?token=${token}`);
     return null;
   }
 
   return <Navigate to="/dashboard" replace />;
+};
+
+/**
+ * Robust absolute redirect to the separate Admin S3 bucket
+ */
+const RedirectToAdmin = () => {
+  const token = localStorage.getItem('token');
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://localhost:5174';
+  const target = `${adminUrl}/dashboard${token ? `?token=${token}` : ''}`;
+  window.location.replace(target);
+  return null;
 };
 
 function App() {
@@ -73,165 +98,169 @@ function App() {
       <Router>
         <div className="App">
           <Toaster position="top-right" richColors />
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<RootRedirect />} />
-            <Route path="/courses" element={<Courses />} />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/admin/*" element={<RedirectToAdmin />} />
+              <Route path="/" element={<RootRedirect />} />
+              <Route path="/courses" element={<Courses />} />
 
-            {/* Public Course Detail */}
-            <Route path="/courses/:slug" element={<CourseDetail />} />
+              {/* Public Course Detail */}
+              <Route path="/courses/:slug" element={<CourseDetail />} />
 
-            {/* Module Hub */}
-            <Route
-              path="/courses/:slug/modules/:moduleId"
-              element={
-                <ProtectedRoute>
-                  <ModuleHubPage />
-                </ProtectedRoute>
-              }
-            />
+              {/* Module Hub */}
+              <Route
+                path="/courses/:slug/modules/:moduleId"
+                element={
+                  <ProtectedRoute>
+                    <ModuleHubPage />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Protected Routes */}
-            <Route
-              path="/quiz/:sessionId"
-              element={
-                <ProtectedRoute>
-                  <Quiz />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/quiz-results"
-              element={
-                <ProtectedRoute>
-                  <QuizResults />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/coach"
-              element={
-                <ProtectedRoute>
-                  <EnhancedCoachPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/courses/:slug/modules/:moduleId/topics/:topicId"
-              element={
-                <ProtectedRoute>
-                  <Lesson />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tutor/:courseId"
-              element={
-                <ProtectedRoute>
-                  <Tutor />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/practice"
-              element={
-                <ProtectedRoute>
-                  <PracticePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/practice/:problemId"
-              element={
-                <ProtectedRoute>
-                  <ProblemSolverPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/leaderboard"
-              element={
-                <ProtectedRoute>
-                  <Leaderboard />
-                </ProtectedRoute>
-              }
-            />
-            {/* Certification Routes - Using components from /components/certification */}
-            <Route
-              path="/certification"
-              element={
-                <ProtectedRoute>
-                  <CertificationLanding />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certification/topics"
-              element={
-                <ProtectedRoute>
-                  <TopicSelection />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certification/difficulty/:topicId"
-              element={
-                <ProtectedRoute>
-                  <DifficultySelection />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certifications/proctored/setup/:topicId/:difficulty"
-              element={
-                <ProtectedRoute>
-                  <TestSetup />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certifications/proctored/test/:topicId/:difficulty"
-              element={
-                <ProtectedRoute>
-                  <CodingTestInterface />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certifications/test/:certificationId"
-              element={
-                <ProtectedRoute>
-                  <CodingTestInterface />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/certifications/proctored/results"
-              element={
-                <ProtectedRoute>
-                  <TestResults />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/test-results/:attemptId"
-              element={
-                <ProtectedRoute>
-                  <CodingTestResults />
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Routes */}
+              <Route
+                path="/quiz/:sessionId"
+                element={
+                  <ProtectedRoute>
+                    <Quiz />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/quiz-results"
+                element={
+                  <ProtectedRoute>
+                    <QuizResults />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/coach"
+                element={
+                  <ProtectedRoute>
+                    <EnhancedCoachPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/courses/:slug/modules/:moduleId/topics/:topicId"
+                element={
+                  <ProtectedRoute>
+                    <Lesson />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tutor/:courseId"
+                element={
+                  <ProtectedRoute>
+                    <Tutor />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/practice"
+                element={
+                  <ProtectedRoute>
+                    <PracticePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/practice/:problemId"
+                element={
+                  <ProtectedRoute>
+                    <ProblemSolverPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/leaderboard"
+                element={
+                  <ProtectedRoute>
+                    <Leaderboard />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Certification Routes - Using components from /components/certification */}
+              <Route
+                path="/certification"
+                element={
+                  <ProtectedRoute>
+                    <CertificationLanding />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certification/topics"
+                element={
+                  <ProtectedRoute>
+                    <TopicSelection />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certification/difficulty/:topicId"
+                element={
+                  <ProtectedRoute>
+                    <DifficultySelection />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certifications/proctored/setup/:topicId/:difficulty"
+                element={
+                  <ProtectedRoute>
+                    <TestSetup />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certifications/proctored/test/:topicId/:difficulty"
+                element={
+                  <ProtectedRoute>
+                    <CodingTestInterface />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certifications/test/:certificationId"
+                element={
+                  <ProtectedRoute>
+                    <CodingTestInterface />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/certifications/proctored/results"
+                element={
+                  <ProtectedRoute>
+                    <TestResults />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/test-results/:attemptId"
+                element={
+                  <ProtectedRoute>
+                    <CodingTestResults />
+                  </ProtectedRoute>
+                }
+              />
 
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </div>
       </Router>
     </AuthProvider>

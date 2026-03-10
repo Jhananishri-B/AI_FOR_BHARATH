@@ -1,0 +1,43 @@
+{
+    "SecurityGroupRules": [
+        {
+            "SecurityGroupRuleId": "sgr-0bbf4ae3910b71e01",
+            "GroupId": "sg-06a5532bb4dcd29a5",
+            "GroupOwnerId": "244271316596",
+            "IsEgress": false,
+            "IpProtocol": "tcp",
+            "FromPort": 8000,
+            "ToPort": 8000,
+            "CidrIpv4": "0.0.0.0/0",
+            "Tags": [],
+            "SecurityGroupRuleArn": "arn:aws:ec2:ap-south-1:244271316596:security-group-rule/sgr-0bbf4ae3910b71e01"
+        },
+        {
+            "SecurityGroupRuleId": "sgr-094facc298422ec42",
+            "GroupId": "sg-06a5532bb4dcd29a5",
+            "GroupOwnerId": "244271316596",
+            "IsEgress": false,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "ReferencedGroupInfo": {
+                "GroupId": "sg-06a5532bb4dcd29a5",
+                "UserId": "244271316596"
+            },
+            "Tags": [],
+            "SecurityGroupRuleArn": "arn:aws:ec2:ap-south-1:244271316596:security-group-rule/sgr-094facc298422ec42"
+        },
+        {
+            "SecurityGroupRuleId": "sgr-06f05d95d9956251d",
+            "GroupId": "sg-06a5532bb4dcd29a5",
+            "GroupOwnerId": "244271316596",
+            "IsEgress": true,
+            "IpProtocol": "-1",
+            "FromPort": -1,
+            "ToPort": -1,
+            "CidrIpv4": "0.0.0.0/0",
+            "Tags": [],
+            "SecurityGroupRuleArn": "arn:aws:ec2:ap-south-1:244271316596:security-group-rule/sgr-06f05d95d9956251d"
+        }
+    ]
+}

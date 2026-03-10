@@ -61,7 +61,11 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173", 
         "http://127.0.0.1:5174",
-        "http://127.0.0.1:8080"
+        "http://127.0.0.1:8080",
+        "http://learnquest-web-frontend-2442713165.s3-website.ap-south-1.amazonaws.com",
+        "https://learnquest-web-frontend-2442713165.s3-website.ap-south-1.amazonaws.com",
+        "http://learnquest-admin-frontend-2442713165.s3-website.ap-south-1.amazonaws.com",
+        "https://learnquest-admin-frontend-2442713165.s3-website.ap-south-1.amazonaws.com"
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],

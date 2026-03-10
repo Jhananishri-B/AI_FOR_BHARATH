@@ -31,22 +31,21 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await authAPI.getMe();
-          const userData = response.data;
+          // Fire both requests in parallel to cut load time
+          const [meResult, progressResult] = await Promise.allSettled([
+            authAPI.getMe(),
+            lessonsAPI.getUserProgress()
+          ]);
 
-          // Fetch additional progress data
-          try {
-            const progressResponse = await lessonsAPI.getUserProgress();
-            const progressData = progressResponse.data;
+          if (meResult.status === 'fulfilled') {
+            const userData = meResult.value.data;
+            const progressData = progressResult.status === 'fulfilled'
+              ? progressResult.value.data
+              : {};
 
-            // Merge progress data with user data
-            setUser({
-              ...userData,
-              ...progressData
-            });
-          } catch (progressError) {
-            console.warn('Could not fetch progress data:', progressError);
-            setUser(userData);
+            setUser({ ...userData, ...progressData });
+          } else {
+            throw meResult.reason;
           }
         } catch (error) {
           console.error('Auth check failed:', error);

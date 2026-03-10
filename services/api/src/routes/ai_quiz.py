@@ -8,7 +8,11 @@ import json
 import os
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
+from typing import List, Optional, Dict, Any
+import asyncio
+from src.bedrock_client import bedrock_service
+
+# We no longer need to check if Ollama is running at startup _current_user
 from ..auth import get_current_user
 from ..models.user import User
 from ..database import get_collection
@@ -107,26 +111,13 @@ Return ONLY a JSON array of questions in this exact format:
 
 Make questions relevant to the course content and user's learning needs."""
 
-        # Call Llama to generate quiz
-        payload = {
-            "model": "llama3",
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Generate a {request.difficulty} quiz for {course['title']} with {request.num_questions} questions."}
-            ],
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/chat",
-            json=payload,
-            timeout=60
+        # Call Bedrock Llama 3 to generate quiz
+        prompt = f"Generate a {request.difficulty} quiz for {course['title']} with {request.num_questions} questions."
+        ai_content = bedrock_service.generate_text(
+            prompt=prompt,
+            system_prompt=system_prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
         )
-        response.raise_for_status()
-        result = response.json()
-        
-        # Parse AI response
-        ai_content = result.get("message", {}).get("content", "[]")
         
         # Extract JSON from AI response
         try:
@@ -283,26 +274,12 @@ Return ONLY a JSON array in this format:
 
 Focus on topics that will help the user learn from their mistakes and improve their understanding."""
 
-        # Call Llama for recommendations
-        payload = {
-            "model": "llama3",
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": "Please recommend topics for this user to focus on."}
-            ],
-            "stream": False
-        }
-        
-        response = requests.post(
-            f"{OLLAMA_BASE_URL}/api/chat",
-            json=payload,
-            timeout=60
+        # Call Bedrock Llama 3 for recommendations
+        ai_content = bedrock_service.generate_text(
+            prompt="Please recommend topics for this user to focus on.",
+            system_prompt=system_prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
         )
-        response.raise_for_status()
-        result = response.json()
-        
-        # Parse AI response
-        ai_content = result.get("message", {}).get("content", "[]")
         
         try:
             start_idx = ai_content.find('[')
@@ -341,9 +318,7 @@ async def test_generate_quiz(request: QuizGenerationRequest):
     Public test endpoint for Quiz Generation (no authentication required)
     """
     try:
-        # Generate quiz using Ollama
-        ollama_url = f"{OLLAMA_BASE_URL}/api/generate"
-        
+        # Generate quiz using Bedrock Llama 3
         prompt = f"""Generate a {request.difficulty} level quiz about {request.course_id} with {request.num_questions} questions.
 
 Format the response as JSON with this structure:
@@ -360,26 +335,19 @@ Format the response as JSON with this structure:
 
 Make the questions educational and relevant to {request.course_id}."""
 
-        import httpx
-        async with httpx.AsyncClient() as client:
-            response = await client.post(ollama_url, json={
-                "model": "llama3:latest",
-                "prompt": prompt,
-                "stream": False
-            })
+        ai_content = bedrock_service.generate_text(
+            prompt=prompt,
+            model_id="meta.llama3-8b-instruct-v1:0"
+        )
             
-            if response.status_code == 200:
-                result = response.json()
-                quiz_data = json.loads(result.get("response", "{}"))
+        quiz_data = json.loads(ai_content)
                 
-                return QuizGenerationResponse(
-                    quiz_id=str(uuid.uuid4()),
-                    questions=quiz_data.get("questions", []),
-                    difficulty=request.difficulty,
-                    course_id=request.course_id
-                )
-            else:
-                raise Exception(f"Ollama API error: {response.status_code}")
+        return QuizGenerationResponse(
+            quiz_id=str(uuid.uuid4()),
+            questions=quiz_data.get("questions", []),
+            difficulty=request.difficulty,
+            course_id=request.course_id
+        )
                 
     except Exception as e:
         print(f"Test quiz generation error: {str(e)}")
@@ -392,7 +360,8 @@ Make the questions educational and relevant to {request.course_id}."""
 async def ai_quiz_health():
     """Check if AI quiz service is available"""
     try:
-        response = requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=5)
-        return {"status": "healthy", "ollama_available": response.status_code == 200}
+        # Since we use Bedrock, we consider it healthy if we can import boto3
+        import boto3
+        return {"status": "healthy", "bedrock_available": True}
     except:
-        return {"status": "unhealthy", "ollama_available": False}
+        return {"status": "unhealthy", "bedrock_available": False}

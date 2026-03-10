@@ -6,12 +6,23 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    proxy: {
-      '/api': {
-        target: '',
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  }
+  },
+  build: {
+    // Warn when chunks exceed 500KB (helps catch regressions)
+    chunkSizeWarningLimit: 500,
+    // Enable CSS code splitting per async chunk
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        // Split heavy vendor libraries into separate cacheable chunks
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-monaco': ['@monaco-editor/react'],
+          'vendor-charts': ['chart.js', 'react-chartjs-2'],
+          'vendor-animation': ['framer-motion'],
+          'vendor-ui': ['sonner', 'lucide-react'],
+        },
+      },
+    },
+  },
 })

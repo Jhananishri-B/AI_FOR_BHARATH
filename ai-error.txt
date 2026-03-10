@@ -1,0 +1,256 @@
+{
+    "events": [
+        {
+            "timestamp": 1772977173224,
+            "message": "INFO:     27.61.60.167:52427 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977177942
+        },
+        {
+            "timestamp": 1772977173229,
+            "message": "INFO:     27.61.60.167:53844 - \"GET /api/auth/me HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977177942
+        },
+        {
+            "timestamp": 1772977173468,
+            "message": "INFO:     27.61.60.167:53844 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977177942
+        },
+        {
+            "timestamp": 1772977184468,
+            "message": "INFO:     27.61.60.167:51109 - \"OPTIONS /api/certifications/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977184530,
+            "message": "INFO:     27.61.60.167:51109 - \"GET /api/certifications/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977184592,
+            "message": "INFO:     27.61.60.167:51109 - \"OPTIONS /api/certifications/topics/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977184653,
+            "message": "INFO:     27.61.60.167:51109 - \"GET /api/certifications/topics/ HTTP/1.1\" 404 Not Found",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977186877,
+            "message": "INFO:     27.61.60.167:51109 - \"OPTIONS /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977186942,
+            "message": "INFO:     27.61.60.167:51109 - \"OPTIONS /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977186989,
+            "message": "INFO:     27.61.60.167:63395 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977186994,
+            "message": "INFO:     27.61.60.167:49666 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977187028,
+            "message": "INFO:     27.61.60.167:51109 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977187975
+        },
+        {
+            "timestamp": 1772977194043,
+            "message": "INFO:     27.61.60.167:62044 - \"OPTIONS /api/admin/cert-tests/specs/cop-test/Easy HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977197955
+        },
+        {
+            "timestamp": 1772977194110,
+            "message": "INFO:     27.61.60.167:62044 - \"GET /api/admin/cert-tests/specs/cop-test/Easy HTTP/1.1\" 403 Forbidden",
+            "ingestionTime": 1772977197955
+        },
+        {
+            "timestamp": 1772977205890,
+            "message": "INFO:     27.61.60.167:54245 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977207960
+        },
+        {
+            "timestamp": 1772977205927,
+            "message": "INFO:     27.61.60.167:56066 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977207960
+        },
+        {
+            "timestamp": 1772977205953,
+            "message": "INFO:     27.61.60.167:58033 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977207960
+        },
+        {
+            "timestamp": 1772977208145,
+            "message": "INFO:     27.61.60.167:58033 - \"OPTIONS /api/admin/cert-tests/specs/gokul-test2/Easy HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977212942
+        },
+        {
+            "timestamp": 1772977208208,
+            "message": "INFO:     27.61.60.167:58033 - \"GET /api/admin/cert-tests/specs/gokul-test2/Easy HTTP/1.1\" 403 Forbidden",
+            "ingestionTime": 1772977212942
+        },
+        {
+            "timestamp": 1772977225285,
+            "message": "INFO:     27.61.60.167:52128 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977227962
+        },
+        {
+            "timestamp": 1772977225327,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977227962
+        },
+        {
+            "timestamp": 1772977225368,
+            "message": "INFO:     27.61.60.167:52873 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977227962
+        },
+        {
+            "timestamp": 1772977227018,
+            "message": "INFO:     27.61.60.167:52873 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977227962
+        },
+        {
+            "timestamp": 1772977228733,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977228759,
+            "message": "INFO:     27.61.60.167:52128 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977228763,
+            "message": "INFO:     27.61.60.167:52873 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977231370,
+            "message": "INFO:     27.61.60.167:52128 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977232238,
+            "message": "INFO:     27.61.60.167:52128 - \"GET /api/admin/cert-tests/specs/cop-test/Easy HTTP/1.1\" 403 Forbidden",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977232713,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977232718,
+            "message": "INFO:     27.61.60.167:52128 - \"GET /api/cert-tests/specs HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977232755,
+            "message": "INFO:     27.61.60.167:52873 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977232944
+        },
+        {
+            "timestamp": 1772977233588,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/certifications/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977237946
+        },
+        {
+            "timestamp": 1772977233651,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/certifications/topics/ HTTP/1.1\" 404 Not Found",
+            "ingestionTime": 1772977237946
+        },
+        {
+            "timestamp": 1772977233765,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/problems HTTP/1.1\" 307 Temporary Redirect",
+            "ingestionTime": 1772977237946
+        },
+        {
+            "timestamp": 1772977233831,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/problems/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977237946
+        },
+        {
+            "timestamp": 1772977235397,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977237946
+        },
+        {
+            "timestamp": 1772977239107,
+            "message": "INFO:     27.61.60.167:54464 - \"GET /api/courses/ HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977242943
+        },
+        {
+            "timestamp": 1772977239176,
+            "message": "INFO:     27.61.60.167:57907 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977242943
+        },
+        {
+            "timestamp": 1772977243725,
+            "message": "INFO:     27.61.60.167:54464 - \"POST /api/ai-quiz/recommend-topics HTTP/1.1\" 500 Internal Server Error",
+            "ingestionTime": 1772977247942
+        },
+        {
+            "timestamp": 1772977246733,
+            "message": "ERROR:src.bedrock_client:Bedrock API error: An error occurred (AccessDeniedException) when calling the InvokeModel operation: User: arn:aws:sts::244271316596:assumed-role/ecsTaskExecutionRole/2d2a6664d9f14da294af53b7450f121b is not authorized to perform: bedrock:InvokeModel on resource: arn:aws:bedrock:ap-south-1::foundation-model/meta.llama3-8b-instruct-v1:0 because no identity-based policy allows the bedrock:InvokeModel action",
+            "ingestionTime": 1772977247942
+        },
+        {
+            "timestamp": 1772977246733,
+            "message": "INFO:     27.61.60.167:54464 - \"POST /api/ai/coach HTTP/1.1\" 500 Internal Server Error",
+            "ingestionTime": 1772977247942
+        },
+        {
+            "timestamp": 1772977256630,
+            "message": "INFO:     27.61.60.167:58454 - \"OPTIONS /api/auth/me HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977256650,
+            "message": "INFO:     27.61.60.167:60233 - \"OPTIONS /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977256700,
+            "message": "INFO:     27.61.60.167:58454 - \"GET /api/auth/me HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977256760,
+            "message": "INFO:     27.61.60.167:60233 - \"GET /api/users/me/dashboard HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977257225,
+            "message": "INFO:     27.61.60.167:60233 - \"OPTIONS /api/ai-quiz/recommend-topics HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977257300,
+            "message": "INFO:     27.61.60.167:58454 - \"POST /api/ai-quiz/recommend-topics HTTP/1.1\" 500 Internal Server Error",
+            "ingestionTime": 1772977257954
+        },
+        {
+            "timestamp": 1772977265018,
+            "message": "INFO:     27.61.60.167:58210 - \"OPTIONS /api/ai/coach HTTP/1.1\" 200 OK",
+            "ingestionTime": 1772977267954
+        },
+        {
+            "timestamp": 1772977265126,
+            "message": "ERROR:src.bedrock_client:Bedrock API error: An error occurred (AccessDeniedException) when calling the InvokeModel operation: User: arn:aws:sts::244271316596:assumed-role/ecsTaskExecutionRole/2d2a6664d9f14da294af53b7450f121b is not authorized to perform: bedrock:InvokeModel on resource: arn:aws:bedrock:ap-south-1::foundation-model/meta.llama3-8b-instruct-v1:0 because no identity-based policy allows the bedrock:InvokeModel action",
+            "ingestionTime": 1772977267954
+        },
+        {
+            "timestamp": 1772977265126,
+            "message": "INFO:     27.61.60.167:58210 - \"POST /api/ai/coach HTTP/1.1\" 500 Internal Server Error",
+            "ingestionTime": 1772977267954
+        }
+    ],
+    "nextForwardToken": "f/39538714232362600133383962195503847524554079292563193858/s",
+    "nextBackwardToken": "b/39538712182879514898022634133270570520413939541482471426/s"
+}

@@ -1,0 +1,191 @@
+{
+    "events": [
+        {
+            "timestamp": 1772969124502,
+            "message": "INFO:     Will watch for changes in these directories: ['/app']",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969124502,
+            "message": "INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969124503,
+            "message": "INFO:     Started reloader process [1] using WatchFiles",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125946,
+            "message": "Process SpawnProcess-1:",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "Traceback (most recent call last):",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/multiprocessing/process.py\", line 314, in _bootstrap",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    self.run()",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/multiprocessing/process.py\", line 108, in run",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    self._target(*self._args, **self._kwargs)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/_subprocess.py\", line 76, in subprocess_started",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    target(sockets=sockets)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/server.py\", line 61, in run",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    return asyncio.run(self.serve(sockets=sockets))",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/asyncio/runners.py\", line 44, in run",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    return loop.run_until_complete(main)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"uvloop/loop.pyx\", line 1518, in uvloop.loop.Loop.run_until_complete",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/server.py\", line 68, in serve",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    config.load()",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/config.py\", line 467, in load",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    self.loaded_app = import_from_string(self.app)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/importer.py\", line 24, in import_from_string",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    raise exc from None",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/site-packages/uvicorn/importer.py\", line 21, in import_from_string",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    module = importlib.import_module(module_str)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/usr/local/lib/python3.10/importlib/__init__.py\", line 126, in import_module",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    return _bootstrap._gcd_import(name[level:], package, level)",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap>\", line 1050, in _gcd_import",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap>\", line 1027, in _find_and_load",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap>\", line 1006, in _find_and_load_unlocked",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap>\", line 688, in _load_unlocked",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap_external>\", line 883, in exec_module",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"<frozen importlib._bootstrap>\", line 241, in _call_with_frames_removed",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/app/src/main.py\", line 24, in <module>",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    from .routes.ai import router as ai_router",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "  File \"/app/src/routes/ai.py\", line 19, in <module>",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "    from .bedrock_client import bedrock_service",
+            "ingestionTime": 1772969128881
+        },
+        {
+            "timestamp": 1772969125950,
+            "message": "ModuleNotFoundError: No module named 'src.routes.bedrock_client'",
+            "ingestionTime": 1772969128881
+        }
+    ],
+    "nextForwardToken": "f/39538532722672498137700813723846727460801331519547834404/s",
+    "nextBackwardToken": "b/39538532690381019090228471414903007402006504058888192000/s"
+}
